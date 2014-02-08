@@ -1,0 +1,55 @@
+
+TBD
+
+
+
+
+ADMIN:
+
+- Add to Apache VHost e.g.
+        RewriteEngine On
+        RewriteRule ^/pad$ /pad/ [R]
+
+- Add Apache Config
+
+        <IfModule mod_proxy.c>
+          ProxyRequests Off
+          ProxyPreserveHost On
+          ProxyVia On
+          #RewriteRule muss in Virtual Host gesetzt werden
+
+          # / am Ende ist entscheidend fuer rev proxy
+         <Location "/pad/">
+          ProxyPass http://127.0.0.1:9001/
+          ProxyPassReverse http://127.0.0.1:9001/
+         </Location>
+         <Proxy *>
+            Options FollowSymLinks MultiViews
+            AllowOverride All
+            Order allow,deny
+            allow from all
+         </Proxy>
+        </IfModule>
+
+
+STYLE:
+To override the standard theme with the social intranet one, you have to copy and override the pad.css into src/static/custom folder in your etherpad installation.
+
+
+
+
+NOTES:
+
+The EtherpadLiteClient.php under libs/ seems to to POST Requests but Etherpad only Support GET 
+So Change:
+  protected function get($function, array $arguments = array()){
+    return $this->call($function, $arguments, 'GET');
+  }
+
+  protected function post($function, array $arguments = array()){
+    return $this->call($function, $arguments, 'GET');
+    #return $this->call($function, $arguments, 'POST');
+  }
+
+Also there was a problem with Zeros 
+
