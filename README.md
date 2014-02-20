@@ -1,4 +1,5 @@
-humhub-modules-notes
-====================
+HumHub - Notes Module
+=====================
 
-Etherpad Integration
+Experimental Module which integrates Etherpad Notes into Spaces
+
