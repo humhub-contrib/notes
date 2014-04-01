@@ -73,7 +73,7 @@ class NotesModule extends CWebModule {
      * 
      * @param type $event
      */
-    public function onSpaceMenuInit($event) {
+    public static function onSpaceMenuInit($event) {
 
         $space = Yii::app()->getController()->getSpace();
         

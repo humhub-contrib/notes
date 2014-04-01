@@ -23,7 +23,7 @@ class NoteWallEntryWidget extends HWidget {
         $this->render('entry', array(
             'note' => $this->note,
             'user' => $user,
-            'space' => $this->note->contentMeta->getContentBase())
+            'space' => $this->note->content->container)
         );
     }
 

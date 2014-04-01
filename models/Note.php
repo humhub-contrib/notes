@@ -65,9 +65,8 @@ class Note extends HActiveRecordContent {
      * @return null
      */
     public function getPadGroupId() {
-        $contentBase = $this->contentMeta->getContentBase();
         try {
-            $mappedGroup = $this->getEtherpadClient()->createGroupIfNotExistsFor($contentBase->guid);
+            $mappedGroup = $this->getEtherpadClient()->createGroupIfNotExistsFor($this->content->container->guid);
             return $mappedGroup->groupID;
         } catch (Exception $e) {
             #print_r($e);
@@ -99,8 +98,7 @@ class Note extends HActiveRecordContent {
      * @return type
      */
     public function getPadId() {
-        $contentBase = $this->contentMeta->getContentBase();
-        return $contentBase->guid . "_" . $this->id;
+        return $this->content->container->guid . "_" . $this->id;
     }
 
     /**

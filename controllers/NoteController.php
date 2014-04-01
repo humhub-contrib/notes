@@ -64,53 +64,24 @@ class NoteController extends Controller {
     }
 
     /**
-     * Posts a new question  throu the question form
-     *
-     * @return type
+     * Creates a new note via NoteFormWidget/ContentFormWidget
      */
     public function actionCreate() {
 
-        $workspace = $this->getSpace();
-
-        if (!$workspace->isMember()) {
-            throw new CHttpException(401, 'Access denied!');
-        }
-
-        $json = array();
-        $json['errorMessage'] = "None";
-
-        $title = Yii::app()->request->getParam('title', ""); // content of post
-        $public = (int) Yii::app()->request->getParam('public', 0);
+        $this->forcePostRequest();
+        $_POST = Yii::app()->input->stripClean($_POST);
 
         $note = new Note();
-        $note->contentMeta->space_id = $workspace->id;
-        $note->title = CHtml::encode(trim($title));
+        $note->content->populateByForm();
+        $note->title = Yii::app()->request->getParam('title');
 
-        if ($public == 1 && $workspace->canShare()) {
-            $note->contentMeta->visibility = Content::VISIBILITY_PUBLIC;
+        if ($note->validate()) {
+            $note->save();
+            $this->renderJson(array('wallEntryId' => $note->content->getFirstWallEntryId()));
         } else {
-            $note->contentMeta->visibility = Content::VISIBILITY_PRIVATE;
+            $this->renderJson(array('errors' => $note->getErrors()), false);
         }
-
-        if ($note->save()) {
-
-            $wallEntry = $note->contentMeta->addToWall($workspace->wall_id);
-
-            // Build JSON Out
-            $json['success'] = true;
-            $json['wallEntryId'] = $wallEntry->id;
-            $json['id'] = $note->id;
-        } else {
-            $json['success'] = false;
-            $json['error'] = $note->getErrors();
-        }
-
-
-        // returns JSON
-        echo CJSON::encode($json);
-        Yii::app()->end();
     }
-
 
     /**
      * Shows the questions tab
@@ -119,7 +90,7 @@ class NoteController extends Controller {
 
         // publish css file to assets
         $url = Yii::app()->getAssetManager()->publish(
-            Yii::getPathOfAlias('application.modules.notes.resources'));
+                Yii::getPathOfAlias('application.modules.notes.resources'));
 
         // register css file
         Yii::app()->clientScript->registerCssFile($url . '/notes.css');
@@ -129,7 +100,7 @@ class NoteController extends Controller {
         $id = (int) Yii::app()->request->getParam('id', 0);
         $note = Note::model()->findByPk($id);
 
-        if ($note->contentMeta->canRead()) {
+        if ($note->content->canRead()) {
 
             $authorId = $note->getPadAuthorId();
             $groupId = $note->getPadGroupId();
@@ -149,13 +120,10 @@ class NoteController extends Controller {
             $padUrl = $url . "p/" . $note->getPadNameInternal();
 
             $this->render('open', array('workspace' => $workspace, 'note' => $note, 'padUrl' => $padUrl));
-
-
         } else {
             throw new CHttpException(401, 'Access denied!');
         }
     }
-
 
     /*
       public function actionAdmin() {

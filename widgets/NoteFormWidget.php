@@ -1,19 +1,18 @@
 <?php
 
 /**
- * This widget is responsible to display the form to add new questions.
+ * This widget is used include the note form.
+ * It normally should be placed above a steam.
+ *
+ * @package humhub.modules.notes.widgets
+ * @since 0.5
  */
-class NoteFormWidget extends HWidget {
+class NoteFormWidget extends ContentFormWidget {
 
-    public $workspace;
+    public $submitUrl = 'notes/note/create';
 
-    public function init() {
-        $assetPrefix = Yii::app()->assetManager->publish(dirname(__FILE__) . '/../resources', true, 0, defined('YII_DEBUG'));
-        Yii::app()->clientScript->registerScriptFile($assetPrefix . '/note.js');
-    }
-
-    public function run() {
-        $this->render('form', array('workspace' => $this->workspace));
+    public function renderForm() {
+        $this->form = $this->render('form', array(), true);
     }
 
 }
