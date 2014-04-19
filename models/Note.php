@@ -11,30 +11,36 @@
  * @property string $updated_at
  * @property integer $updated_by
  */
-class Note extends HActiveRecordContent {
+class Note extends HActiveRecordContent
+{
 
     private static $_etherClient;
+    public $userToNotify = "";
+    public $userColor = "d4eed4";
 
     /**
      * Returns the static model of the specified AR class.
      * @param string $className active record class name.
      * @return Note the static model class
      */
-    public static function model($className = __CLASS__) {
+    public static function model($className = __CLASS__)
+    {
         return parent::model($className);
     }
 
     /**
      * @return string the associated database table name
      */
-    public function tableName() {
+    public function tableName()
+    {
         return 'note';
     }
 
     /**
      * @return array validation rules for model attributes.
      */
-    public function rules() {
+    public function rules()
+    {
         // NOTE: you should only define rules for those attributes that
         // will receive user inputs.
         return array(
@@ -47,7 +53,8 @@ class Note extends HActiveRecordContent {
     /**
      * @return array customized attribute labels (name=>label)
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'id' => 'ID',
             'title' => 'Title',
@@ -59,12 +66,67 @@ class Note extends HActiveRecordContent {
         );
     }
 
+
+    /**
+     * @return array relational rules.
+     */
+    public function relations()
+    {
+        return array(
+            'answers' => array(self::HAS_MANY, 'PollAnswer', 'poll_id'),
+        );
+    }
+
+    public function afterSave()
+    {
+        parent::afterSave();
+
+        if ($this->isNewRecord) {
+
+            // Create Note created activity
+            $activity = Activity::CreateForContent($this);
+            $activity->type = "NoteCreated";
+            $activity->module = "notes";
+            $activity->save();
+            $activity->fire();
+
+            // notify assigned Users
+            if ($this->userToNotify != "") {
+                $guids = explode(",", $this->userToNotify);
+                foreach ($guids as $guid) {
+                    $guid = trim($guid);
+                    $user = User::model()->findByAttributes(array('guid' => $guid));
+                    if ($user != null) {
+                        $this->notifyUser($user);
+                    }
+                }
+            }
+        }
+
+        return true;
+    }
+
+
+    /**
+     * Deletes a Poll including its dependencies.
+     */
+    public function beforeDelete()
+    {
+
+        // delete notification
+        Notification::remove('Note', $this->id);
+
+        return parent::beforeDelete();
+    }
+
+
     /**
      * Gets Etherpads Group ID
      *
      * @return null
      */
-    public function getPadGroupId() {
+    public function getPadGroupId()
+    {
         try {
             $mappedGroup = $this->getEtherpadClient()->createGroupIfNotExistsFor($this->content->container->guid);
             return $mappedGroup->groupID;
@@ -80,7 +142,8 @@ class Note extends HActiveRecordContent {
      *
      * @return null
      */
-    public function getPadAuthorId() {
+    public function getPadAuthorId()
+    {
         try {
             $author = $this->getEtherpadClient()->createAuthorIfNotExistsFor(Yii::app()->user->guid, Yii::app()->user->displayName);
             return $author->authorID;
@@ -97,7 +160,8 @@ class Note extends HActiveRecordContent {
      *
      * @return type
      */
-    public function getPadId() {
+    public function getPadId()
+    {
         return $this->content->container->guid . "_" . $this->id;
     }
 
@@ -106,7 +170,8 @@ class Note extends HActiveRecordContent {
      *
      * @return type
      */
-    public function getPadNameInternal() {
+    public function getPadNameInternal()
+    {
         return $this->getPadGroupId() . "$" . $this->getPadId();
     }
 
@@ -114,7 +179,8 @@ class Note extends HActiveRecordContent {
      * Returns Content for this Pad
      *
      */
-    public function getPadContent() {
+    public function getPadContent()
+    {
         try {
             $content = $this->getEtherpadClient()->getText($this->getPadNameInternal());
             return $content->text;
@@ -124,9 +190,141 @@ class Note extends HActiveRecordContent {
     }
 
     /**
+     * Returns contributed user for this Pad
+     *
+     */
+    public function getPadUser()
+    {
+        try {
+            // get list of all pad authors
+            $authors = $this->getEtherpadClient()->listAuthorsOfPad($this->getPadNameInternal());
+
+            // save all author names in an array
+            $editors = array();
+
+            foreach ($authors->authorIDs as $authorID) {
+
+                // get name of every author by authorID
+                $result = $this->getEtherpadClient()->getAuthorName($authorID);
+
+                // split firstname and lastname from the string
+                $result = explode(' ', $result);
+
+                // search for an user with this firstname and lastname in the profile model
+                $profile = Profile::model()->findByAttributes(array('firstname' => $result[0], 'lastname' => $result[1]));
+
+                // load the the user within the id
+                $user = User::model()->findByAttributes(array('id' => $profile->user_id));
+
+                // get (set if not exist) the user color
+                $this->userColor = $this->getUserColor($profile->user_id);
+
+                // extend array with user details from profile and user model
+                array_push($editors, array('id' => $user->id, 'displayName' => $profile->firstname . " " . $profile->lastname, 'title' => $profile->title, 'image' => $user->getProfileImage()->getUrl(), 'url' => $user->getProfileUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorID)));
+
+            }
+
+            return $editors;
+
+        } catch (Exception $ex) {
+            return Yii::t('NotesModule.base', "Could not get note users!");
+        }
+    }
+
+
+    public function getRevisionCount()
+    {
+
+        $revision_count = $this->getEtherpadClient()->getRevisionsCount($this->getPadNameInternal());
+
+        return $revision_count->revisions;
+
+    }
+
+
+    /**
+     * check if an user is currently online
+     *
+     */
+    public function getOnlineStatus($authorID)
+    {
+
+        $status = "false";
+
+        // get all authors, which are currently online
+        $authorsOnline = $this->getEtherpadClient()->padUsers($this->getPadNameInternal());
+
+        // check if the passed author id match with an online user
+        foreach ($authorsOnline->padUsers as $authorOnline) {
+            if ($authorOnline->id == $authorID) {
+                $status = "true";
+            }
+        }
+
+        return $status;
+
+    }
+
+    /**
+     * get global note color for an user or create a new one, if not exists
+     *
+     */
+    public function getUserColor($id)
+    {
+
+        // get user color from db
+        $query = NoteUserColors::model()->findByAttributes(array('user_id' => $id));
+
+        // create a new color, if not exists
+        if ($query == null) {
+
+            // create random rgb colors in a bright color range
+            $red = rand(180, 235);
+            $green = rand(180, 235);
+            $blue = rand(180, 235);
+
+            $rgb = array($red, $green, $blue);
+
+            // convert into hex code
+            $hexColor = $this->rgb2hex($rgb);
+
+            // save new color in database
+            $noteUserColor = new NoteUserColors();
+            $noteUserColor->user_id = $id;
+            $noteUserColor->color = $hexColor;
+
+            if ($noteUserColor->validate()) {
+                $noteUserColor->save();
+            }
+        } else {
+
+            // get color, if an entry exists in database for this user
+            $hexColor = $query->color;
+        }
+
+        return $hexColor;
+
+    }
+
+    /**
+     * Returns a hex color code
+     *
+     */
+    private function rgb2hex($rgb)
+    {
+        $hex = str_pad(dechex($rgb[0]), 2, "0", STR_PAD_LEFT);
+        $hex .= str_pad(dechex($rgb[1]), 2, "0", STR_PAD_LEFT);
+        $hex .= str_pad(dechex($rgb[2]), 2, "0", STR_PAD_LEFT);
+
+        return $hex; // returns the hex value including the number sign (#)
+    }
+
+
+    /**
      * Tries to create this etherpad if not already exists
      */
-    public function tryCreatePad() {
+    public function tryCreatePad()
+    {
         try {
             $this->getEtherpadClient()->createGroupPad($this->getPadGroupId(), $this->getPadId(), "This is a new pad!");
         } catch (Exception $e) {
@@ -142,7 +340,8 @@ class Note extends HActiveRecordContent {
      *
      * @return type
      */
-    public static function getEtherpadClient() {
+    public static function getEtherpadClient()
+    {
         $apiKey = HSetting::Get('apiKey', 'notes');
         $url = HSetting::Get('baseUrl', 'notes');
 
@@ -155,7 +354,8 @@ class Note extends HActiveRecordContent {
     /**
      * Returns the Wall Output
      */
-    public function getWallOut() {
+    public function getWallOut()
+    {
         return Yii::app()->getController()->widget('application.modules.notes.widgets.NoteWallEntryWidget', array('note' => $this), true);
     }
 
@@ -166,7 +366,8 @@ class Note extends HActiveRecordContent {
      *
      * @return String
      */
-    public function getContentTitle() {
+    public function getContentTitle()
+    {
         return Yii::t('NotesModule.base', "Note") . " \"" . Helpers::truncateText($this->title, 25) . "\"";
     }
 
@@ -174,7 +375,8 @@ class Note extends HActiveRecordContent {
      * Tests API Connection and returns boolean
      *
      */
-    public static function testAPIConnection() {
+    public static function testAPIConnection()
+    {
 
 
         try {
@@ -186,6 +388,74 @@ class Note extends HActiveRecordContent {
         }
 
         return false;
+    }
+
+
+    /**
+     * Assign user to this note
+     */
+    public function notifyUser($user = "")
+    {
+
+        if ($user == "") {
+            $user = Yii::app()->user->getModel();
+        }
+
+        // Fire Notification to user
+        $notification = new Notification();
+        $notification->class = "NoteCreatedNotification";
+        $notification->user_id = $user->id; // Assigned User
+        $notification->space_id = $this->content->space_id;
+        $notification->source_object_model = 'Note';
+        $notification->source_object_id = $this->id;
+        $notification->target_object_model = 'Note';
+        $notification->target_object_id = $this->id;
+        $notification->save();
+
+    }
+
+    /**
+     * Send notifications for updates to a pad
+     */
+    public function notifyUserForUpdates()
+    {
+
+        // get pad authors
+        $authors = $this->getPadUser();
+
+        foreach ($authors as $author) {
+
+            // save current user
+            $currentUser = Yii::app()->user->id;
+
+            // Don't send notification to the current user who did the changes
+            if ($author['id'] != $currentUser) {
+
+                // Fire Notification to user
+                $notification = new Notification();
+                $notification->class = "NoteUpdatedNotification";
+                $notification->user_id = $author['id']; // Assigned User
+                $notification->space_id = $this->content->space_id;
+                $notification->source_object_model = 'Note';
+                $notification->source_object_id = $this->id;
+                $notification->target_object_model = 'Note';
+                $notification->target_object_id = $this->id;
+                $notification->save();
+            }
+
+        }
+
+    }
+
+
+    public function createUpdateActivity() {
+
+        // Create Note updated activity
+        $activity = Activity::CreateForContent($this);
+        $activity->type = "NoteUpdated";
+        $activity->module = "notes";
+        $activity->save();
+        $activity->fire();
     }
 
 }

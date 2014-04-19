@@ -15,15 +15,20 @@
     <div class="panel-body">
         <?php $this->beginContent('application.modules_core.wall.views.wallLayout', array('object' => $note)); ?>
 
-        <b><?php echo $note->title; ?></b>
+        <div class="notes-sticker">
+            <div class="notes-stripe"></div>
+            <span class="notes-title"><?php echo $note->title; ?></span>
 
-        <div class="note_snippet">
-            <?php
-            foreach (array_slice(explode("\n", $note->getPadContent()), 0, 4) as $line) {
-                echo Helpers::truncateText($line, 75);
-            }
-            ?>
+            <div class="note_snippet">
+                <?php
+                foreach (array_slice(explode("\n", $note->getPadContent()), 0, 4) as $line) {
+                    echo Helpers::truncateText($line, 75);
+                }
+                ?>
+            </div>
         </div>
+
+
         <br/>
         <a href="<?php echo Yii::app()->createUrl('notes/note/open', array('id' => $note->id, 'guid' => $space->guid)); ?>"
            class="btn btn-primary"><?php echo Yii::t('NotesModule.base', 'Open full note'); ?></a>

@@ -4,9 +4,33 @@
 
     <!-- iframe container for etherpad -->
     <iframe id="note" src="<?php echo $padUrl; ?>" height="400" width="100%"></iframe>
+
+    <?php if (count($editors) > 0)  { ?>
+    <div class="panel-body">
+        Editors: <br/>
+        <?php foreach ($editors as $editor) : ?>
+            <div class="note-editor">
+                <a href="<?php echo $editor['url']; ?>">
+                    <img src="<?php echo $editor['image']; ?>" class="img-rounded tt img_margin"
+                         height="40" width="40" alt="40x40" data-src="holder.js/40x40"
+                         style="width: 40px; height: 40px; <?php if ($editor['online'] == "false" && $editor['id'] != Yii::app()->user->id) { ?>opacity: 0.5;<?php } ?>"
+                         data-toggle="tooltip" data-placement="top" title=""
+                         data-original-title="<strong><?php echo $editor['displayName']; ?></strong><br><?php echo $editor['title']; ?> <?php if ($editor['online'] == "true" || $editor['id'] == Yii::app()->user->id) { ?>(Online)<?php } ?>">
+                </a>
+                <div class="note-editor-color" style="background: #<?php echo $editor['color']; ?>;"></div>
+            </div>
+        <?php endforeach; ?>
+    </div>
+    <?php } ?>
+
     <hr>
     <div class="panel-body">
-        <a href="<?php echo Yii::app()->createAbsoluteUrl('space/space', array('guid' => Yii::app()->request->getParam('guid'))) ?>"
+<!--        <a href="<?php /*echo Yii::app()->createAbsoluteUrl('space/space', array('guid' => Yii::app()->request->getParam('guid'))) */?>"
+           class="btn btn-primary"><?php /*echo Yii::t('NotesModule.base', 'Save and close'); */?></a>-->
+
+        <?php //echo Yii::app()->createUrl('notes/note/open', array('id' => $note->id, 'guid' => $space->guid)); ?>
+
+        <a href="<?php echo Yii::app()->createUrl('notes/note/edit', array('id' => $note->id, 'revision' => $revision, 'guid' => Yii::app()->request->getParam('guid'))); ?>"
            class="btn btn-primary"><?php echo Yii::t('NotesModule.base', 'Save and close'); ?></a>
     </div>
 
@@ -27,8 +51,9 @@
     function setSize() {
 
         // bring iframe height to window height
-        $('#note').css('height', window.innerHeight - 280 + 'px');
+        $('#note').css('height', window.innerHeight - 380 + 'px');
 
     }
+
 
 </script>

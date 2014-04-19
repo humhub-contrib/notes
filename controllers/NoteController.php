@@ -1,13 +1,15 @@
 <?php
 
-class NoteController extends Controller {
+class NoteController extends Controller
+{
 
     public $subLayout = "_layout";
 
     /**
      * @return array action filters
      */
-    public function filters() {
+    public function filters()
+    {
         return array(
             'accessControl', // perform access control for CRUD operations
         );
@@ -18,7 +20,8 @@ class NoteController extends Controller {
      * This method is used by the 'accessControl' filter.
      * @return array access control rules
      */
-    public function accessRules() {
+    public function accessRules()
+    {
         return array(
             array('allow', // allow authenticated user
                 'users' => array('@'),
@@ -34,7 +37,8 @@ class NoteController extends Controller {
      *
      * @return type
      */
-    public function behaviors() {
+    public function behaviors()
+    {
         return array(
             'SpaceControllerBehavior' => array(
                 'class' => 'application.modules_core.space.SpaceControllerBehavior',
@@ -47,7 +51,8 @@ class NoteController extends Controller {
      *
      * @return type
      */
-    public function actions() {
+    public function actions()
+    {
         return array(
             'stream' => array(
                 'class' => 'application.modules.notes.NoteStreamAction',
@@ -59,14 +64,16 @@ class NoteController extends Controller {
     /**
      * Shows the questions tab
      */
-    public function actionShow() {
+    public function actionShow()
+    {
         $this->render('show');
     }
 
     /**
      * Creates a new note via NoteFormWidget/ContentFormWidget
      */
-    public function actionCreate() {
+    public function actionCreate()
+    {
 
         $this->forcePostRequest();
         $_POST = Yii::app()->input->stripClean($_POST);
@@ -74,6 +81,9 @@ class NoteController extends Controller {
         $note = new Note();
         $note->content->populateByForm();
         $note->title = Yii::app()->request->getParam('title');
+
+        // get user guids from notify input
+        $note->userToNotify = Yii::app()->request->getParam('notifiyUserInput');
 
         if ($note->validate()) {
             $note->save();
@@ -86,18 +96,19 @@ class NoteController extends Controller {
     /**
      * Shows the questions tab
      */
-    public function actionOpen() {
+    public function actionOpen()
+    {
 
         // publish css file to assets
         $url = Yii::app()->getAssetManager()->publish(
-                Yii::getPathOfAlias('application.modules.notes.resources'));
+            Yii::getPathOfAlias('application.modules.notes.resources'));
 
         // register css file
         Yii::app()->clientScript->registerCssFile($url . '/notes.css');
 
         $workspace = $this->getSpace();
 
-        $id = (int) Yii::app()->request->getParam('id', 0);
+        $id = (int)Yii::app()->request->getParam('id', 0);
         $note = Note::model()->findByPk($id);
 
         if ($note->content->canRead()) {
@@ -111,18 +122,54 @@ class NoteController extends Controller {
             $sessionID = $sessionID->sessionID;
             setcookie("sessionID", $sessionID, $validUntil, '/'); // Set a cookie
 
-
             $note->tryCreatePad();
 
             $url = HSetting::Get('baseUrl', 'notes');
 
-            // View
-            $padUrl = $url . "p/" . $note->getPadNameInternal();
+            // get pad users
+            $editors = $note->getPadUser();
 
-            $this->render('open', array('workspace' => $workspace, 'note' => $note, 'padUrl' => $padUrl));
+            // get revision count for this pad
+            $revision = $note->getRevisionCount();
+
+            // View
+            $padUrl = $url . "p/" . $note->getPadNameInternal() . "?showChat=true&showLineNumbers=false&userColor=%23" . $note->getUserColor(Yii::app()->user->id);
+
+            $this->render('open', array('workspace' => $workspace, 'note' => $note, 'padUrl' => $padUrl, 'editors' => $editors, 'revision' => $revision));
         } else {
             throw new CHttpException(401, 'Access denied!');
         }
+    }
+
+
+
+    public function actionEdit()
+    {
+
+        // get note id and load from database
+        $id = (int)Yii::app()->request->getParam('id', 0);
+        $note = Note::model()->findByPk($id);
+
+        // get current revision count
+        $revisionCountNow = $note->getRevisionCount();
+
+        // get revision count by opening
+        $revisionCountByOpening = (int)Yii::app()->request->getParam('revision', 0);
+
+        // match revisions
+        if ($revisionCountNow != $revisionCountByOpening) {
+
+            // create activity
+            $note->createUpdateActivity();
+
+            // send notifications to other authors, if changes was made
+            $note->notifyUserForUpdates();
+
+        }
+        // Redirect to the the space
+        $this->htmlRedirect($this->createUrl('//space/space', array('sguid' => Yii::app()->request->getParam('guid'))));
+        //echo "Juhu";
+
     }
 
     /*

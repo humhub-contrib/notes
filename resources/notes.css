@@ -1,3 +1,47 @@
 #note {
     border: none;
 }
+
+.notes-sticker {
+    position: relative;
+    border: 1px solid #cecece;
+    background-color: #ffffff;
+    padding: 31px 10px 30px 45px;
+    margin: 20px 10px 0 0;
+    line-height: 2.3em;
+    background-image: url('notes_bg.png');
+    box-shadow: 1px 1px 3px #dedede;
+    -webkit-box-shadow: 1px 1px 3px #dedede;
+    -moz-box-shadow: 1px 1px 3px #dedede;
+}
+
+.notes-sticker .notes-stripe {
+    position: absolute;
+    background-image: url('stripe.png');
+    width: 84px;
+    height: 29px;
+    top: -15px;
+    left: 50%;
+    margin-left: -40px;
+}
+
+.notes-sticker .notes-title {
+    font-weight: 300;
+    font-size: 16px;
+    color: #bebebe;
+}
+
+.note-editor {
+    position: relative;
+    display: inline-block;
+}
+
+.note-editor .note-editor-color {
+    position: absolute;
+    bottom: -3px;
+    right: -3px;
+    width: 11px;
+    height: 11px;
+    border-radius: 10px;
+    border: 2px solid #fff;
+}

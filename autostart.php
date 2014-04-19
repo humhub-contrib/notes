@@ -10,6 +10,7 @@ Yii::app()->moduleManager->register(array(
         'application.modules.notes.*',
         'application.modules.notes.models.*',
         'application.modules.notes.libs.*',
+        'application.modules.notes.notifications.*',
     ),
     // Events to Catch 
     'events' => array(

@@ -14,8 +14,9 @@ class NoteWallEntryWidget extends HWidget {
      * Inits, publishs required javascript resources
      */
     public function init() {
-        //$assetPrefix = Yii::app()->assetManager->publish(dirname(__FILE__) . '/../resources', true, 0, defined('YII_DEBUG'));
-        //Yii::app()->clientScript->registerScriptFile($assetPrefix . '/note.js');
+        $assetPrefix = Yii::app()->assetManager->publish(dirname(__FILE__) . '/../resources', true, 0, defined('YII_DEBUG'));
+        Yii::app()->clientScript->registerCssFile($assetPrefix . '/notes.css');
+        //Yii::app()->assetManager->publish(Yii::getPathOfAlias('notes.resources'), true, 0, defined('YII_DEBUG') );
     }
 
     public function run() {
@@ -26,7 +27,6 @@ class NoteWallEntryWidget extends HWidget {
             'space' => $this->note->content->container)
         );
     }
-
 }
 
 ?>
