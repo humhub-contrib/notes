@@ -7,7 +7,7 @@
 
     <?php if (count($editors) > 0)  { ?>
     <div class="panel-body">
-        Editors: <br/>
+        <div style="font-size: 12px; margin-bottom: 5px;">Editors: </div>
         <?php foreach ($editors as $editor) : ?>
             <div class="note-editor">
                 <a href="<?php echo $editor['url']; ?>">
@@ -25,11 +25,6 @@
 
     <hr>
     <div class="panel-body">
-<!--        <a href="<?php /*echo Yii::app()->createAbsoluteUrl('space/space', array('guid' => Yii::app()->request->getParam('guid'))) */?>"
-           class="btn btn-primary"><?php /*echo Yii::t('NotesModule.base', 'Save and close'); */?></a>-->
-
-        <?php //echo Yii::app()->createUrl('notes/note/open', array('id' => $note->id, 'guid' => $space->guid)); ?>
-
         <a href="<?php echo Yii::app()->createUrl('notes/note/edit', array('id' => $note->id, 'revision' => $revision, 'guid' => Yii::app()->request->getParam('guid'))); ?>"
            class="btn btn-primary"><?php echo Yii::t('NotesModule.base', 'Save and close'); ?></a>
     </div>
