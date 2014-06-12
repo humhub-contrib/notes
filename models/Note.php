@@ -66,7 +66,6 @@ class Note extends HActiveRecordContent
         );
     }
 
-
     /**
      * @return array relational rules.
      */
@@ -106,7 +105,6 @@ class Note extends HActiveRecordContent
         return true;
     }
 
-
     /**
      * Deletes a Poll including its dependencies.
      */
@@ -118,7 +116,6 @@ class Note extends HActiveRecordContent
 
         return parent::beforeDelete();
     }
-
 
     /**
      * Gets Etherpads Group ID
@@ -204,33 +201,25 @@ class Note extends HActiveRecordContent
 
             foreach ($authors->authorIDs as $authorID) {
 
-                // get name of every author by authorID
-                $result = $this->getEtherpadClient()->getAuthorName($authorID);
-
-                // split firstname and lastname from the string
-                $result = explode(' ', $result);
-
-                // search for an user with this firstname and lastname in the profile model
-                $profile = Profile::model()->findByAttributes(array('firstname' => $result[0], 'lastname' => $result[1]));
-
                 // load the the user within the id
-                $user = User::model()->findByAttributes(array('id' => $profile->user_id));
+                $user = User::model()->findByAttributes(array('username' => $this->getEtherpadClient()->getAuthorName($authorID)));
 
-                // get (set if not exist) the user color
-                $this->userColor = $this->getUserColor($profile->user_id);
+                if ($user !== null) {
 
-                // extend array with user details from profile and user model
-                array_push($editors, array('id' => $user->id, 'displayName' => $profile->firstname . " " . $profile->lastname, 'title' => $profile->title, 'image' => $user->getProfileImage()->getUrl(), 'url' => $user->getProfileUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorID)));
+                    // get (set if not exist) the user color
+                    $this->userColor = $this->getUserColor($user->id);
 
+                    // extend array with user details from profile and user model
+                    array_push($editors, array('id' => $user->id, 'displayName' => $user->displayName, 'title' => $user->profile->title, 'image' => $user->getProfileImage()->getUrl(), 'url' => $user->getProfileUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorID)));
+                }
+                
             }
 
             return $editors;
-
         } catch (Exception $ex) {
             return Yii::t('NotesModule.base', "Could not get note users!");
         }
     }
-
 
     public function getRevisionCount()
     {
@@ -238,9 +227,7 @@ class Note extends HActiveRecordContent
         $revision_count = $this->getEtherpadClient()->getRevisionsCount($this->getPadNameInternal());
 
         return $revision_count->revisions;
-
     }
-
 
     /**
      * check if an user is currently online
@@ -262,7 +249,6 @@ class Note extends HActiveRecordContent
         }
 
         return $status;
-
     }
 
     /**
@@ -303,7 +289,6 @@ class Note extends HActiveRecordContent
         }
 
         return $hexColor;
-
     }
 
     /**
@@ -318,7 +303,6 @@ class Note extends HActiveRecordContent
 
         return $hex; // returns the hex value including the number sign (#)
     }
-
 
     /**
      * Tries to create this etherpad if not already exists
@@ -390,7 +374,6 @@ class Note extends HActiveRecordContent
         return false;
     }
 
-
     /**
      * Assign user to this note
      */
@@ -411,7 +394,6 @@ class Note extends HActiveRecordContent
         $notification->target_object_model = 'Note';
         $notification->target_object_id = $this->id;
         $notification->save();
-
     }
 
     /**
@@ -442,13 +424,11 @@ class Note extends HActiveRecordContent
                 $notification->target_object_id = $this->id;
                 $notification->save();
             }
-
         }
-
     }
 
-
-    public function createUpdateActivity() {
+    public function createUpdateActivity()
+    {
 
         // Create Note updated activity
         $activity = Activity::CreateForContent($this);
