@@ -82,7 +82,7 @@ class NotesModule extends CWebModule {
             $event->sender->addItem(array(
                 'label' => Yii::t('NotesModule.base', 'Notes'),
                 'url' => Yii::app()->createUrl('/notes/note/show', array('guid' => $space->guid)),
-                'icon' => '<i class="icon-file-text"></i>',
+                'icon' => '<i class="fa fa-file-text"></i>',
                 'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'notes'),
             ));
         }
