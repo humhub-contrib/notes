@@ -14,6 +14,7 @@
 class Note extends HActiveRecordContent
 {
 
+    public $autoAddToWall = true;
     private static $_etherClient;
     public $userToNotify = "";
     public $userColor = "d4eed4";
@@ -212,7 +213,6 @@ class Note extends HActiveRecordContent
                     // extend array with user details from profile and user model
                     array_push($editors, array('id' => $user->id, 'displayName' => $user->displayName, 'title' => $user->profile->title, 'image' => $user->getProfileImage()->getUrl(), 'url' => $user->getProfileUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorID)));
                 }
-                
             }
 
             return $editors;
