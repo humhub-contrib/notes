@@ -1,0 +1,10 @@
+{
+    "id": "notes",
+    "name": "Etherpad Notes",
+    "description": "Integrates Etherpad Notes",
+    "keywords": ["etherpad", "notes"],
+    "version": "0.5",
+    "humhub": {
+        "minVersion": "0.5"
+    }
+}
