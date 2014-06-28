@@ -204,7 +204,7 @@ class Note extends HActiveRecordContent
 
             foreach ($authors->authorIDs as $authorID) {
 
-                // get name of every author by authorID
+/*                // get name of every author by authorID
                 $result = $this->getEtherpadClient()->getAuthorName($authorID);
 
                 // split firstname and lastname from the string
@@ -214,14 +214,16 @@ class Note extends HActiveRecordContent
                 $profile = Profile::model()->findByAttributes(array('firstname' => $result[0], 'lastname' => $result[1]));
 
                 // load the the user within the id
-                $user = User::model()->findByAttributes(array('id' => $profile->user_id));
+                $user = User::model()->findByAttributes(array('id' => $profile->user_id));*/
+
+                // load the the user within the id
+                $user = User::model()->findByAttributes(array('username' => $this->getEtherpadClient()->getAuthorName($authorID)));
 
                 // get (set if not exist) the user color
-                $this->userColor = $this->getUserColor($profile->user_id);
+                $this->userColor = $this->getUserColor($user->id);
 
                 // extend array with user details from profile and user model
-                array_push($editors, array('id' => $user->id, 'displayName' => $profile->firstname . " " . $profile->lastname, 'title' => $profile->title, 'image' => $user->getProfileImage()->getUrl(), 'url' => $user->getProfileUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorID)));
-
+                array_push($editors, array('id' => $user->id, 'displayName' => $user->displayName, 'title' => $user->profile->title, 'image' => $user->getProfileImage()->getUrl(), 'url' => $user->getProfileUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorID)));
             }
 
             return $editors;
