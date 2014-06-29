@@ -1,17 +1,21 @@
 HumHub - Notes Module
 =====================
 
-Experimental Module which integrates Etherpad Notes into Spaces
+Integrates etherpad notes as new content type in spaces.
 
+__Note: This module requires Etherpad Lite__
 
-
-Installation:
+## Installation
 
 - Get Etherpad Server up & running
-- Put files into /protected/modules/notes/
-- Enable it unter Admin -> Modules
+- Update Etherpad CSS - Copy protected/modules/notes/docs/pad.css into src/static/custom of your etherpad installation
+- Enable module under Admin -> Modules
 - Set API Key & Etherpad Url in Module Configuration
-- Enable Module in some space
+- Activate in space
+
+## Manual Installation 
+
+- Put files into /protected/modules/notes/
 
 
 
