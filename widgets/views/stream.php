@@ -21,7 +21,7 @@
 	</div>
 	
 	<!-- DIV for an single wall entry -->
-	<div class="s2_single">
+	<div class="s2_single" style="display: none;">
                 <div class="back_button_holder">
                     <a href="#" class="singleBackLink button_white"><?php echo Yii::t('WallModule.base', 'Back to stream'); ?></a>
                 </div>

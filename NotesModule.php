@@ -102,6 +102,7 @@ class NotesModule extends HWebModule
         if ($space->isModuleEnabled('notes')) {
             $event->sender->addItem(array(
                 'label' => Yii::t('NotesModule.base', 'Notes'),
+                'group' => 'modules',
                 'url' => Yii::app()->createUrl('/notes/note/show', array('guid' => $space->guid)),
                 'icon' => '<i class="fa fa-file-text"></i>',
                 'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'notes'),
