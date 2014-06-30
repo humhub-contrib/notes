@@ -17,5 +17,7 @@ __Note: This module requires Etherpad Lite__
 
 - Put files into /protected/modules/notes/
 
+## ToDos
 
-
+- Delete pads also when deleted in humhub
+- Delete authors also when deleted in humhub

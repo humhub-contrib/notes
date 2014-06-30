@@ -83,4 +83,17 @@ class NotesModule extends HWebModule
         }
     }
 
+    /**
+     * On User delete, do some cleanup stuff
+     * Own Notes (Content) by the user are automatically deleted!
+     * 
+     * @param type $event
+     */
+    public static function onUserDelete($event)
+    {
+
+        NoteUserColors::model()->deleteAllByAttributes(array('user_id' => $event->sender->id));
+        return true;
+    }
+
 }

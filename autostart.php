@@ -12,6 +12,7 @@ Yii::app()->moduleManager->register(array(
     // Events to Catch 
     'events' => array(
         array('class' => 'SpaceMenuWidget', 'event' => 'onInit', 'callback' => array('NotesModule', 'onSpaceMenuInit')),
+        array('class' => 'User', 'event' => 'onBeforeDelete', 'callback' => array('NotesModule', 'onUserDelete')),        
     )
 ));
 ?>
