@@ -3,7 +3,7 @@
     "name": "Etherpad Notes",
     "description": "Integrates Etherpad Notes",
     "keywords": ["etherpad", "notes"],
-    "version": "0.5.1",
+    "version": "0.5.2",
     "humhub": {
         "minVersion": "0.5"
     }

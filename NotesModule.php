@@ -31,59 +31,32 @@ class NotesModule extends HWebModule
     }
 
     /**
-     * On User delete, also delete all comments 
-     * 
-     * @param type $event
+     * On global module disable
      */
-    public static function onUserDelete($event)
+    public function disable()
     {
-        foreach (Content::model()->findAllByAttributes(array('created_by' => $event->sender->id, 'object_model' => 'Note')) as $content) {
-            $content->delete();
-        }
-
-        return true;
-    }
-
-    /**
-     * On workspace deletion make sure to delete all comments
-     * 
-     * @param type $event
-     */
-    public static function onSpaceDelete($event)
-    {
-
-        foreach (Content::model()->findAllByAttributes(array('space_id' => $event->sender->id, 'object_model' => 'Note')) as $content) {
-            $content->delete();
-        }
-    }
-
-    /**
-     * After the module was disabled globally
-     * Do Cleanup
-     * 
-     * @param type $event
-     */
-    public static function onDisableModule($event)
-    {
-        if ($event->params == 'notes') {
+        if (parent::disable()) {
             foreach (Content::model()->findAllByAttributes(array('object_model' => 'Note')) as $content) {
                 $content->delete();
             }
+            return true;
         }
+
+        return false;
     }
 
     /**
-     * After the module was uninstalled from a workspace.
-     * Do Cleanup
+     * On disabling this module on a space, deleted all module -> space 
+     * related content.
      * 
-     * @param type $event
+     * Method sub is provided by "SpaceModuleBehavior"
+     * 
+     * @param Space $space
      */
-    public static function onSpaceUninstallModule($event)
+    public function disableSpaceModule(Space $space)
     {
-        if ($event->params == 'notes') {
-            foreach (Content::model()->findAllByAttributes(array('space_id' => $event->sender->id, 'object_model' => 'Note')) as $content) {
-                $content->delete();
-            }
+        foreach (Content::model()->findAllByAttributes(array('space_id' => $space->id, 'object_model' => 'Note')) as $content) {
+            $content->delete();
         }
     }
 
@@ -108,18 +81,6 @@ class NotesModule extends HWebModule
                 'isActive' => (Yii::app()->controller->module && Yii::app()->controller->module->id == 'notes'),
             ));
         }
-    }
-
-    /**
-     * On run of integrity check command, validate all module data
-     * 
-     * @param type $event
-     */
-    public static function onIntegrityCheck($event)
-    {
-
-        $integrityChecker = $event->sender;
-        $integrityChecker->showTestHeadline("Validating Notes Module (" . Note::model()->count() . " entries)");
     }
 
 }
