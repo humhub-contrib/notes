@@ -16,7 +16,6 @@ class Note extends HActiveRecordContent
 
     public $autoAddToWall = true;
     private static $_etherClient;
-    public $userToNotify = "";
     public $userColor = "d4eed4";
 
     /**
@@ -82,25 +81,12 @@ class Note extends HActiveRecordContent
         parent::afterSave();
 
         if ($this->isNewRecord) {
-
             // Create Note created activity
             $activity = Activity::CreateForContent($this);
             $activity->type = "NoteCreated";
             $activity->module = "notes";
             $activity->save();
             $activity->fire();
-
-            // notify assigned Users
-            if ($this->userToNotify != "") {
-                $guids = explode(",", $this->userToNotify);
-                foreach ($guids as $guid) {
-                    $guid = trim($guid);
-                    $user = User::model()->findByAttributes(array('guid' => $guid));
-                    if ($user != null) {
-                        $this->notifyUser($user);
-                    }
-                }
-            }
         }
 
         return true;
@@ -372,28 +358,6 @@ class Note extends HActiveRecordContent
         }
 
         return false;
-    }
-
-    /**
-     * Assign user to this note
-     */
-    public function notifyUser($user = "")
-    {
-
-        if ($user == "") {
-            $user = Yii::app()->user->getModel();
-        }
-
-        // Fire Notification to user
-        $notification = new Notification();
-        $notification->class = "NoteCreatedNotification";
-        $notification->user_id = $user->id; // Assigned User
-        $notification->space_id = $this->content->space_id;
-        $notification->source_object_model = 'Note';
-        $notification->source_object_id = $this->id;
-        $notification->target_object_model = 'Note';
-        $notification->target_object_id = $this->id;
-        $notification->save();
     }
 
     /**

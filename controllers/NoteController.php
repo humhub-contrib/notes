@@ -82,9 +82,6 @@ class NoteController extends Controller
         $note->content->populateByForm();
         $note->title = Yii::app()->request->getParam('title');
 
-        // get user guids from notify input
-        $note->userToNotify = Yii::app()->request->getParam('notifiyUserInput');
-
         if ($note->validate()) {
             $note->save();
             $this->renderJson(array('wallEntryId' => $note->content->getFirstWallEntryId()));
