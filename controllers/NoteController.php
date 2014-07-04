@@ -41,7 +41,7 @@ class NoteController extends Controller
     {
         return array(
             'SpaceControllerBehavior' => array(
-                'class' => 'application.modules_core.space.SpaceControllerBehavior',
+                'class' => 'application.modules_core.space.behaviors.SpaceControllerBehavior',
             ),
         );
     }
