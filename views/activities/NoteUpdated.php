@@ -1,7 +1,7 @@
 <?php $this->beginContent('application.modules_core.activity.views.activityLayout', array('activity' => $activity)); ?>
-
-<strong><?php echo $user->displayName; ?></strong>
-<?php echo Yii::t('NotesModule.base', 'has worked on the note'); ?> "<i><?php echo Helpers::truncateText($target->title, 25); ?></i>".
-
+<?php echo Yii::t('SpaceModule.activities', '{userName} has worked on the note {noteName}.', array(
+    '{userName}' => '<strong>'. $user->displayName .'</strong>',
+    '{noteName}' => $target->getContentTitle()
+)); ?>
 <?php $this->endContent(); ?>
 
