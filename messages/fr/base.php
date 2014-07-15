@@ -17,28 +17,5 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'API Connection successful!' => '',
-  'Could not connect to API!' => '',
-  'Could not get note content!' => '',
-  'Current Status:' => '',
-  'Etherpad API Key' => '',
-  'Integrates etherpads to the space.' => '',
-  'Integrates etherpads to your space.' => '',
-  'No notes found which matches your current filter(s)!' => '',
-  'Note' => '',
   'Notes' => '',
-  'Notes Module Configuration' => '',
-  'Open full note' => '',
-  'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!' => '',
-  'Save' => '',
-  'Save & Test' => '',
-  'Save and close' => '',
-  'The notes module needs a etherpad server up and running!' => '',
-  'The zsso module needs a Zeros SSO server up and running!' => '',
-  'There are no notes yet!' => '',
-  'This is a public note (also non-members)' => '',
-  'Title of your new note...' => '',
-  'URL to Etherpad' => '',
-  'You also need to put private/public keys in /protected/modules/zsso/keys/ !' => '',
-  'created a new note' => '',
 );

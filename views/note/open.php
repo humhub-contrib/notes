@@ -26,7 +26,7 @@
     <hr>
     <div class="panel-body">
         <a href="<?php echo Yii::app()->createUrl('notes/note/edit', array('id' => $note->id, 'revision' => $revision, 'guid' => Yii::app()->request->getParam('guid'))); ?>"
-           class="btn btn-primary"><?php echo Yii::t('NotesModule.base', 'Save and close'); ?></a>
+           class="btn btn-primary"><?php echo Yii::t('NotesModule.views_note_open', 'Save and close'); ?></a>
     </div>
 
 </div>

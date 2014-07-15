@@ -24,8 +24,8 @@ class NotesConfigureForm extends CFormModel {
      */
     public function attributeLabels() {
         return array(
-            'baseUrl' => Yii::t('NotesModule.base', 'URL to Etherpad'),
-            'apiKey' => Yii::t('NotesModule.base', 'Etherpad API Key'),
+            'baseUrl' => Yii::t('NotesModule.forms_NotesConfigureForm', 'URL to Etherpad'),
+            'apiKey' => Yii::t('NotesModule.forms_NotesConfigureForm', 'Etherpad API Key'),
         );
     }
 

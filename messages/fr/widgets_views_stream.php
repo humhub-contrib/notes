@@ -17,5 +17,6 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Notes' => '',
+  'No notes found which matches your current filter(s)!' => '',
+  'There are no notes yet!' => '',
 );

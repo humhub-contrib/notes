@@ -17,5 +17,5 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Notes' => '',
+  '{userName} has worked on the note {spaceName}.' => '',
 );

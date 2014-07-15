@@ -17,5 +17,7 @@
  * NOTE, this file must be saved in UTF-8 encoding.
  */
 return array (
-  'Notes' => '',
+  'Could not get note content!' => '',
+  'Could not get note users!' => '',
+  'Note' => '',
 );

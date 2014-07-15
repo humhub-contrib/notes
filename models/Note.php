@@ -169,7 +169,7 @@ class Note extends HActiveRecordContent
             $content = $this->getEtherpadClient()->getText($this->getPadNameInternal());
             return $content->text;
         } catch (Exception $ex) {
-            return Yii::t('NotesModule.base', "Could not get note content!");
+            return Yii::t('NotesModule.models_Note', "Could not get note content!");
         }
     }
 
@@ -203,7 +203,7 @@ class Note extends HActiveRecordContent
 
             return $editors;
         } catch (Exception $ex) {
-            return Yii::t('NotesModule.base', "Could not get note users!");
+            return Yii::t('NotesModule.models_Note', "Could not get note users!");
         }
     }
 
@@ -338,7 +338,7 @@ class Note extends HActiveRecordContent
      */
     public function getContentTitle()
     {
-        return Yii::t('NotesModule.base', "Note") . " \"" . Helpers::truncateText($this->title, 25) . "\"";
+        return Yii::t('NotesModule.models_Note', "Note") . " \"" . Helpers::truncateText($this->title, 25) . "\"";
     }
 
     /**

@@ -8,13 +8,13 @@
 
 		<div class="emptyStreamMessage">
 				<div class="placeholder_text">
-                    <i class="icon-frown"></i> <?php echo Yii::t('NotesModule.base', 'There are no notes yet!'); ?>
+                    <i class="icon-frown"></i> <?php echo Yii::t('NotesModule.widgets_views_stream', 'There are no notes yet!'); ?>
 				</div>
 		</div>
 
 		<div class="emptyFilterStreamMessage">
 				<div class="placeholder_text">
-                    <i class="icon-frown"></i> <?php echo Yii::t('NotesModule.base', 'No notes found which matches your current filter(s)!'); ?>
+                    <i class="icon-frown"></i> <?php echo Yii::t('NotesModule.widgets_views_stream', 'No notes found which matches your current filter(s)!'); ?>
 				</div>
 		</div>
 		
