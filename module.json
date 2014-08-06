@@ -1,10 +1,11 @@
 {
     "id": "notes",
     "name": "Etherpad Notes",
-    "description": "Integrates Etherpad Notes",
+    "description": "Integrates the common etherpad online editor in spaces.",
     "keywords": ["etherpad", "notes"],
-    "version": "0.5.3",
+    "version": "0.5.4",
     "humhub": {
-        "minVersion": "0.6.5"
-    }
+        "minVersion": "0.8.0"
+    },
+    "screenshots": ["assets/screen1.jpg", "assets/screen2.jpg"]
 }
