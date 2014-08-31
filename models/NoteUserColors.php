@@ -1,25 +1,5 @@
 <?php
 
-/**
- * This is the model class for table "user_follow".
- *
- * The followings are the available columns in table 'user_follow':
- * @property integer $user_follower_id
- * @property integer $user_followed_id
- * @property string $created_at
- * @property integer $created_by
- * @property string $updated_at
- * @property integer $updated_by
- *
- * The followings are the available model relations:
- * @property User $userFollower
- * @property User $userFollowed
- *
- * @package humhub.modules_core.user.models
- * @since 0.5
- * @author Luke
-
- */
 class NoteUserColors extends HActiveRecord {
 
     /**
