@@ -1,19 +1,19 @@
 
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo Yii::t('NotesModule.base', 'Notes Module Configuration'); ?></div>
+    <div class="panel-heading"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Notes Module Configuration'); ?></div>
     <div class="panel-body">
 
 
-        <p><?php echo Yii::t('NotesModule.base', 'The notes module needs a etherpad server up and running!'); ?><br>
-            <?php echo Yii::t('NotesModule.base', 'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!'); ?></p>
+        <p><?php echo Yii::t('NotesModule.views_noteConfig_index', 'The notes module needs a etherpad server up and running!'); ?><br>
+            <?php echo Yii::t('NotesModule.views_noteConfig_index', 'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!'); ?></p>
 
         <br/>
         <?php if (HSetting::Get('baseUrl', 'notes') != "" && HSetting::Get('apiKey', 'notes') != ""): ?>
-            <p><?php echo Yii::t('NotesModule.base', 'Current Status:'); ?>
+            <p><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Current Status:'); ?>
                 <?php if (Note::testAPIConnection()) : ?>
-                    <span style="color:green"><?php echo Yii::t('NotesModule.base', 'API Connection successful!'); ?></span>
+                    <span style="color:green"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'API Connection successful!'); ?></span>
                 <?php else: ?>
-                    <span style="color:red"><?php echo Yii::t('NotesModule.base', 'Could not connect to API!'); ?></span>
+                    <span style="color:red"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Could not connect to API!'); ?></span>
                 <?php endif; ?>
             </p>
         <?php endif; ?>
@@ -46,8 +46,8 @@
 
 
         <hr>
-        <?php echo CHtml::submitButton(Yii::t('NotesModule.base', 'Save & Test'), array('class' => 'btn btn-primary')); ?>
-        <a class="btn btn-default" href="<?php echo $this->createUrl('//admin/module'); ?>"><?php echo Yii::t('AdminModule.base', 'Back to modules'); ?></a>
+        <?php echo CHtml::submitButton(Yii::t('NotesModule.views_noteConfig_index', 'Save & Test'), array('class' => 'btn btn-primary')); ?>
+        <a class="btn btn-default" href="<?php echo $this->createUrl('//admin/module'); ?>"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Back to modules'); ?></a>
 
         <?php $this->endWidget(); ?>
     </div>

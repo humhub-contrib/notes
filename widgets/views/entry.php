@@ -31,7 +31,7 @@
 
         <br/>
         <a href="<?php echo Yii::app()->createUrl('notes/note/open', array('id' => $note->id, 'guid' => $space->guid)); ?>"
-           class="btn btn-primary"><?php echo Yii::t('NotesModule.base', 'Open note'); ?></a>
+           class="btn btn-primary"><?php echo Yii::t('NotesModule.widgets_views_entry', 'Open note'); ?></a>
 
         <?php $this->endContent(); ?>
     </div>
