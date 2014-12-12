@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Title of your new note' => 'Titulek nové poznámky',
+  'Title of your new note' => 'Název nové poznámky',
 );
