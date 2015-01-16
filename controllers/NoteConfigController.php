@@ -55,7 +55,7 @@ class NoteConfigController extends Controller {
                 $form->apiKey = HSetting::Set('apiKey', $form->apiKey, 'notes');
 
 #                $this->redirect(Yii::app()->createUrl('admin/manageModules'));
-                $this->redirect(Yii::app()->createUrl('notes/noteconfig/index'));
+                $this->redirect(Yii::app()->createUrl('notes/noteConfig/index'));
             }
         } else {
             $form->baseUrl = HSetting::Get('baseUrl', 'notes');
