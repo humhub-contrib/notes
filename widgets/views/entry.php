@@ -17,12 +17,12 @@
 
         <div class="notes-sticker">
             <div class="notes-stripe"></div>
-            <span class="notes-title"><?php echo $note->title; ?></span>
+            <span class="notes-title"><?php echo CHtml::encode($note->title); ?></span>
 
             <div class="note_snippet">
                 <?php
                 foreach (array_slice(explode("\n", $note->getPadContent()), 0, 4) as $line) {
-                    echo Helpers::truncateText($line, 75);
+                    echo CHtml::encode(Helpers::truncateText($line, 75));
                 }
                 ?>
             </div>
