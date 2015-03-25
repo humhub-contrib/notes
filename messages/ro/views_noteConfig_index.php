@@ -1,7 +1,7 @@
 <?php
 return array (
   'API Connection successful!' => '',
-  'Back to modules' => 'Zpět k modulům',
+  'Back to modules' => '',
   'Could not connect to API!' => '',
   'Current Status:' => '',
   'Notes Module Configuration' => '',
