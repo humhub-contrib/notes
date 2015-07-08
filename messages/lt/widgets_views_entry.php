@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Open note' => '',
+  'Open note' => 'Atidaryti pastabą',
 );
