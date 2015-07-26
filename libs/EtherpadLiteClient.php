@@ -52,6 +52,7 @@ class EtherpadLiteClient {
         curl_setopt($c, CURLOPT_POST, true);
         curl_setopt($c, CURLOPT_POSTFIELDS, $arguments);
       }
+      $this->handleCurlProxyOptions($c);
       $result = curl_exec($c);
       curl_close($c);
     // fallback to plain php
@@ -357,5 +358,26 @@ class EtherpadLiteClient {
       "padID" => $padID,
       "msg"   => $msg
     ));
+  }
+
+  /**
+   * @param resource $curl Curl Handle
+   */
+  protected function handleCurlProxyOptions(&$curl)
+  {
+    if (HSetting::Get('enabled', 'proxy')) {
+      curl_setopt($curl, CURLOPT_PROXY, HSetting::Get('server', 'proxy'));
+      curl_setopt($curl, CURLOPT_PROXYPORT, HSetting::Get('port', 'proxy'));
+
+      if (defined('CURLOPT_PROXYUSERNAME')) {
+        curl_setopt($curl, CURLOPT_PROXYUSERNAME, HSetting::Get('user', 'proxy'));
+      }
+      if (defined('CURLOPT_PROXYPASSWORD')) {
+        curl_setopt($curl, CURLOPT_PROXYPASSWORD, HSetting::Get('pass', 'proxy'));
+      }
+      if (defined('CURLOPT_NOPROXY')) {
+        curl_setopt($curl, CURLOPT_NOPROXY, HSetting::Get('noproxy', 'proxy'));
+      }
+    }
   }
 }
