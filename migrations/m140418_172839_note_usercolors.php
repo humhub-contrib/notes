@@ -1,6 +1,6 @@
 <?php
 
-class m140418_172839_note_usercolors extends EDbMigration
+class m140418_172839_note_usercolors extends yii\db\Migration
 {
 	public function up()
 	{

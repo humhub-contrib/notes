@@ -5,7 +5,7 @@
     "keywords": ["etherpad", "notes"],
     "version": "0.5.6",
     "humhub": {
-        "minVersion": "0.8.0"
+        "minVersion": "0.20"
     },
     "screenshots": ["assets/screen1.jpg", "assets/screen2.jpg"]
 }

@@ -1,5 +1,12 @@
 <?php
 
+namespace humhub\modules\notes\models;
+
+use Yii;
+use humhub\models\Setting;
+use humhub\modules\notes\libs\EtherpadLiteClient;
+use humhub\modules\user\models\User;
+
 /**
  * This is the model class for table "note".
  *
@@ -11,7 +18,7 @@
  * @property string $updated_at
  * @property integer $updated_by
  */
-class Note extends HActiveRecordContent
+class Note extends \humhub\modules\content\components\ContentActiveRecord
 {
 
     public $autoAddToWall = true;
@@ -19,19 +26,9 @@ class Note extends HActiveRecordContent
     public $userColor = "d4eed4";
 
     /**
-     * Returns the static model of the specified AR class.
-     * @param string $className active record class name.
-     * @return Note the static model class
-     */
-    public static function model($className = __CLASS__)
-    {
-        return parent::model($className);
-    }
-
-    /**
      * @return string the associated database table name
      */
-    public function tableName()
+    public static function tableName()
     {
         return 'note';
     }
@@ -41,12 +38,9 @@ class Note extends HActiveRecordContent
      */
     public function rules()
     {
-        // NOTE: you should only define rules for those attributes that
-        // will receive user inputs.
         return array(
-            array('title, created_at, created_by, updated_at, updated_by', 'required'),
-            array('created_by, updated_by', 'numerical', 'integerOnly' => true),
-            array('title', 'length', 'max' => 255),
+            array(['title'], 'required'),
+            array('title', 'string', 'max' => 255),
         );
     }
 
@@ -64,44 +58,6 @@ class Note extends HActiveRecordContent
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
         );
-    }
-
-    /**
-     * @return array relational rules.
-     */
-    public function relations()
-    {
-        return array(
-            'answers' => array(self::HAS_MANY, 'PollAnswer', 'poll_id'),
-        );
-    }
-
-    public function afterSave()
-    {
-        parent::afterSave();
-
-        if ($this->isNewRecord) {
-            // Create Note created activity
-            $activity = Activity::CreateForContent($this);
-            $activity->type = "NoteCreated";
-            $activity->module = "notes";
-            $activity->save();
-            $activity->fire();
-        }
-
-        return true;
-    }
-
-    /**
-     * Deletes a Poll including its dependencies.
-     */
-    public function beforeDelete()
-    {
-
-        // delete notification
-        Notification::remove('Note', $this->id);
-
-        return parent::beforeDelete();
     }
 
     /**
@@ -129,7 +85,7 @@ class Note extends HActiveRecordContent
     public function getPadAuthorId()
     {
         try {
-            $author = $this->getEtherpadClient()->createAuthorIfNotExistsFor(Yii::app()->user->guid, Yii::app()->user->displayName);
+            $author = $this->getEtherpadClient()->createAuthorIfNotExistsFor(Yii::$app->user->guid, Yii::$app->user->getIdentity()->displayName);
             return $author->authorID;
         } catch (Exception $e) {
             echo "\n\ncreateAuthorIfNotExistsFor Failed with message: " . $e->getMessage();
@@ -168,7 +124,7 @@ class Note extends HActiveRecordContent
         try {
             $content = $this->getEtherpadClient()->getText($this->getPadNameInternal());
             return $content->text;
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return Yii::t('NotesModule.models_Note', "Could not get note content!");
         }
     }
@@ -189,7 +145,7 @@ class Note extends HActiveRecordContent
             foreach ($authors->authorIDs as $authorID) {
 
                 // load the the user within the id
-                $user = User::model()->findByAttributes(array('username' => $this->getEtherpadClient()->getAuthorName($authorID)));
+                $user = User::findOne(array('username' => $this->getEtherpadClient()->getAuthorName($authorID)));
 
                 if ($user !== null) {
 
@@ -202,7 +158,7 @@ class Note extends HActiveRecordContent
             }
 
             return $editors;
-        } catch (Exception $ex) {
+        } catch (\Exception $ex) {
             return Yii::t('NotesModule.models_Note', "Could not get note users!");
         }
     }
@@ -245,7 +201,7 @@ class Note extends HActiveRecordContent
     {
 
         // get user color from db
-        $query = NoteUserColors::model()->findByAttributes(array('user_id' => $id));
+        $query = NoteUserColors::findOne(array('user_id' => $id));
 
         // create a new color, if not exists
         if ($query == null) {
@@ -297,9 +253,10 @@ class Note extends HActiveRecordContent
     {
         try {
             $this->getEtherpadClient()->createGroupPad($this->getPadGroupId(), $this->getPadId(), "This is a new pad!");
+        } catch (\InvalidArgumentException $e) {
+            
         } catch (Exception $e) {
             # already exists
-            # print_r($e);
         }
     }
 
@@ -312,8 +269,8 @@ class Note extends HActiveRecordContent
      */
     public static function getEtherpadClient()
     {
-        $apiKey = HSetting::Get('apiKey', 'notes');
-        $url = HSetting::Get('baseUrl', 'notes');
+        $apiKey = Setting::Get('apiKey', 'notes');
+        $url = Setting::Get('baseUrl', 'notes');
 
         if (!self::$_etherClient)
             self::$_etherClient = new EtherpadLiteClient($apiKey, $url . "api");
@@ -326,7 +283,7 @@ class Note extends HActiveRecordContent
      */
     public function getWallOut()
     {
-        return Yii::app()->getController()->widget('application.modules.notes.widgets.NoteWallEntryWidget', array('note' => $this), true);
+        return \humhub\modules\notes\widgets\WallEntry::widget(array('note' => $this));
     }
 
     /**
@@ -347,59 +304,19 @@ class Note extends HActiveRecordContent
      */
     public static function testAPIConnection()
     {
-
-
         try {
             $client = self::getEtherpadClient();
             $client->listAllGroups();
             return true;
+        } catch (\UnexpectedValueException $ex) {
+            return false;
+        } catch (\InvalidArgumentException $ex) {
+            return false;
         } catch (Exception $ex) {
             return false;
         }
 
         return false;
-    }
-
-    /**
-     * Send notifications for updates to a pad
-     */
-    public function notifyUserForUpdates()
-    {
-
-        // get pad authors
-        $authors = $this->getPadUser();
-
-        foreach ($authors as $author) {
-
-            // save current user
-            $currentUser = Yii::app()->user->id;
-
-            // Don't send notification to the current user who did the changes
-            if ($author['id'] != $currentUser) {
-
-                // Fire Notification to user
-                $notification = new Notification();
-                $notification->class = "NoteUpdatedNotification";
-                $notification->user_id = $author['id']; // Assigned User
-                $notification->space_id = $this->content->space_id;
-                $notification->source_object_model = 'Note';
-                $notification->source_object_id = $this->id;
-                $notification->target_object_model = 'Note';
-                $notification->target_object_id = $this->id;
-                $notification->save();
-            }
-        }
-    }
-
-    public function createUpdateActivity()
-    {
-
-        // Create Note updated activity
-        $activity = Activity::CreateForContent($this);
-        $activity->type = "NoteUpdated";
-        $activity->module = "notes";
-        $activity->save();
-        $activity->fire();
     }
 
 }

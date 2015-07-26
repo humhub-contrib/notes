@@ -1,4 +1,11 @@
+<?php
 
+use humhub\models\Setting;
+use yii\helpers\Url;
+use yii\helpers\Html;
+use humhub\modules\notes\models\Note;
+use humhub\compat\CActiveForm;
+?>
 <div class="panel panel-default">
     <div class="panel-heading"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Notes Module Configuration'); ?></div>
     <div class="panel-body">
@@ -8,8 +15,9 @@
             <?php echo Yii::t('NotesModule.views_noteConfig_index', 'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!'); ?></p>
 
         <br/>
-        <?php if (HSetting::Get('baseUrl', 'notes') != "" && HSetting::Get('apiKey', 'notes') != ""): ?>
+        <?php if (Setting::Get('baseUrl', 'notes') != "" && Setting::Get('apiKey', 'notes') != ""): ?>
             <p><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Current Status:'); ?>
+                
                 <?php if (Note::testAPIConnection()) : ?>
                     <span style="color:green"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'API Connection successful!'); ?></span>
                 <?php else: ?>
@@ -21,12 +29,7 @@
         <br/>
         <br/>
 
-        <?php
-        $form = $this->beginWidget('CActiveForm', array(
-            'id' => 'notes-configure-form',
-            'enableAjaxValidation' => true,
-        ));
-        ?>
+        <?php $form = CActiveForm::begin(); ?>
 
         <?php echo $form->errorSummary($model); ?>
 
@@ -46,9 +49,9 @@
 
 
         <hr>
-        <?php echo CHtml::submitButton(Yii::t('NotesModule.views_noteConfig_index', 'Save & Test'), array('class' => 'btn btn-primary')); ?>
-        <a class="btn btn-default" href="<?php echo $this->createUrl('//admin/module'); ?>"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Back to modules'); ?></a>
+        <?php echo Html::submitButton(Yii::t('NotesModule.views_noteConfig_index', 'Save & Test'), array('class' => 'btn btn-primary')); ?>
+        <a class="btn btn-default" href="<?php echo Url::to(['/admin/module']); ?>"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Back to modules'); ?></a>
 
-        <?php $this->endWidget(); ?>
+        <?php CActiveForm::end(); ?>
     </div>
 </div>

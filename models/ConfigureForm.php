@@ -1,6 +1,12 @@
 <?php
 
-class NotesConfigureForm extends CFormModel {
+namespace humhub\modules\notes\models;
+
+use Yii;
+use yii\base\Model;
+
+class ConfigureForm extends Model
+{
 
     public $baseUrl;
     public $apiKey;
@@ -8,12 +14,11 @@ class NotesConfigureForm extends CFormModel {
     /**
      * Declares the validation rules.
      */
-    public function rules() {
+    public function rules()
+    {
         return array(
-            array('apiKey, baseUrl', 'required'),
-            array('apiKey', 'length', 'max' => 250),
-
-            //array('baseUrl', 'url'),      // dont work with http://localhsot/..
+            array(['apiKey', 'baseUrl'], 'required'),
+            array('apiKey', 'string', 'max' => 250),
         );
     }
 
@@ -22,7 +27,8 @@ class NotesConfigureForm extends CFormModel {
      * If not declared here, an attribute would have a label that is
      * the same as its name with the first letter in upper case.
      */
-    public function attributeLabels() {
+    public function attributeLabels()
+    {
         return array(
             'baseUrl' => Yii::t('NotesModule.forms_NotesConfigureForm', 'URL to Etherpad'),
             'apiKey' => Yii::t('NotesModule.forms_NotesConfigureForm', 'Etherpad API Key'),

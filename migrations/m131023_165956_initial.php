@@ -1,6 +1,6 @@
 <?php
 
-class m131023_165956_initial extends ZDbMigration {
+class m131023_165956_initial extends yii\db\Migration {
 
     public function up() {
         $this->createTable('note', array(
