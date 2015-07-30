@@ -6,43 +6,52 @@ use Yii;
 use yii\helpers\Url;
 use humhub\modules\notes\models\Note;
 use humhub\modules\notes\models\NoteUserColors;
+use humhub\modules\space\models\Space;
+use humhub\modules\content\components\ContentContainerActiveRecord;
+use humhub\modules\content\components\ContentContainerModule;
 
-class Module extends \humhub\components\Module
+class Module extends ContentContainerModule
 {
 
     /**
      * @inheritdoc
      */
-    public function behaviors()
+    public function getContentContainerTypes()
     {
         return [
-            \humhub\modules\space\behaviors\SpaceModule::className(),
+            Space::className(),
         ];
     }
 
+    /**
+     * @inheritdoc
+     */
     public function getConfigUrl()
     {
         return Url::to(['/notes/config']);
     }
 
+    /**
+     * @inheritdoc
+     */
     public function disable()
     {
 
-        if (parent::disable()) {
+        parent::disable();
 
-            foreach (Note::find()->all() as $note) {
-                $note->delete();
-            }
-
-            return true;
+        foreach (Note::find()->all() as $note) {
+            $note->delete();
         }
-
-        return false;
     }
 
-    public function disableSpaceModule(Space $space)
+    /**
+     * @inheritdoc
+     */
+    public function disableContentContainer(ContentContainerActiveRecord $container)
     {
-        foreach (Note::find()->contentContainer($space)->all() as $note) {
+        parent::disableContentContainer($container);
+
+        foreach (Note::find()->contentContainer($container)->all() as $note) {
             $note->delete();
         }
     }
