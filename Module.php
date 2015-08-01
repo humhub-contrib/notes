@@ -37,11 +37,11 @@ class Module extends ContentContainerModule
     public function disable()
     {
 
-        parent::disable();
-
         foreach (Note::find()->all() as $note) {
             $note->delete();
         }
+
+        parent::disable();
     }
 
     /**
