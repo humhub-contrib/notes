@@ -2,19 +2,15 @@
 
 namespace humhub\modules\notes\widgets;
 
-use humhub\components\Widget;
-
-class WallEntry extends Widget
+class WallEntry extends \humhub\modules\content\widgets\WallEntry
 {
-
-    public $note;
 
     public function run()
     {
         return $this->render('entry', array(
-                    'note' => $this->note,
-                    'user' => $this->note->content->user,
-                    'contentContainer' => $this->note->content->container));
+                    'note' => $this->contentObject,
+                    'user' => $this->contentObject->content->user,
+                    'contentContainer' => $this->contentObject->content->container));
     }
 
 }

@@ -26,6 +26,11 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord
     public $userColor = "d4eed4";
 
     /**
+     * @inheritdoc
+     */
+    public $wallEntryClass = "humhub\modules\notes\widgets\WallEntry";
+
+    /**
      * @return string the associated database table name
      */
     public static function tableName()
@@ -278,24 +283,14 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord
         return self::$_etherClient;
     }
 
-    /**
-     * Returns the Wall Output
-     */
-    public function getWallOut()
+    public function getContentName()
     {
-        return \humhub\modules\notes\widgets\WallEntry::widget(array('note' => $this));
+        return Yii::t('NotesModule.models_Note', "Note");
     }
 
-    /**
-     * Returns a title/text which identifies this IContent.
-     *
-     * e.g. Post: foo bar 123...
-     *
-     * @return String
-     */
-    public function getContentTitle()
+    public function getContentDescription()
     {
-        return Yii::t('NotesModule.models_Note', "Note") . " \"" . Helpers::truncateText($this->title, 25) . "\"";
+        return $this->title;
     }
 
     /**
