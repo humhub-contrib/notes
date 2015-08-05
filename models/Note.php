@@ -18,7 +18,7 @@ use humhub\modules\user\models\User;
  * @property string $updated_at
  * @property integer $updated_by
  */
-class Note extends \humhub\modules\content\components\ContentActiveRecord
+class Note extends \humhub\modules\content\components\ContentActiveRecord implements \humhub\modules\search\interfaces\Searchable
 {
 
     public $autoAddToWall = true;
@@ -312,6 +312,17 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord
         }
 
         return false;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getSearchAttributes()
+    {
+        return array(
+            'title' => $this->title,
+            'content' => $this->getPadContent(),
+        );
     }
 
 }
