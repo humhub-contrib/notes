@@ -28,7 +28,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
     /**
      * @inheritdoc
      */
-    public $wallEntryClass = "humhub\modules\notes\widgets\WallEntry";
+    public $wallEntryClass = 'humhub\modules\notes\widgets\WallEntry';
 
     /**
      * @return string the associated database table name

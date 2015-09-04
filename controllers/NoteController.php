@@ -13,6 +13,12 @@ use humhub\models\Setting;
 class NoteController extends ContentContainerController
 {
 
+    /**
+     * @var boolean hides containers sidebar in layout
+     * @since 0.11
+     */
+    public $hideSidebar = true;
+
     public function actions()
     {
         return array(
@@ -87,12 +93,12 @@ class NoteController extends ContentContainerController
         $revisionCountByOpening = (int) Yii::$app->request->get('revision', 0);
 
         /*
-        if ($revisionCountNow != $revisionCountByOpening) {
-            
-        }
-        */
-        
-        $this->redirect($this->contentContainer->getUrl()); 
+          if ($revisionCountNow != $revisionCountByOpening) {
+
+          }
+         */
+
+        $this->redirect($this->contentContainer->getUrl());
     }
 
 }
