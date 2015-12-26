@@ -18,6 +18,4 @@
  */
 return [
     'There are no notes yet!' => '',
-    'Back to stream' => 'Quay lại nhóm ',
-    'No notes found which matches your current filter(s)!' => '@@@@',
 ];
