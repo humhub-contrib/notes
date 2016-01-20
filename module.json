@@ -3,7 +3,7 @@
     "name": "Etherpad Notes",
     "description": "Integrates the common etherpad online editor in spaces.",
     "keywords": ["etherpad", "notes"],
-    "version": "0.6.3",
+    "version": "0.6.5",
     "humhub": {
         "minVersion": "0.20"
     },
