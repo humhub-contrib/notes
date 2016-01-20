@@ -21,9 +21,9 @@ Assets::register($this);
                     <a href="<?php echo $editor['url']; ?>">
                         <img src="<?php echo $editor['image']; ?>" class="img-rounded tt img_margin"
                              height="40" width="40" alt="40x40" data-src="holder.js/40x40"
-                             style="width: 40px; height: 40px; <?php if ($editor['online'] == "false" && $editor['id'] != Yii::app()->user->id) { ?>opacity: 0.5;<?php } ?>"
+                             style="width: 40px; height: 40px; <?php if ($editor['online'] == "false" && $editor['id'] != Yii::$app->user->id) { ?>opacity: 0.5;<?php } ?>"
                              data-toggle="tooltip" data-placement="top" title=""
-                             data-original-title="<strong><?php echo Html::encode($editor['displayName']); ?></strong><br><?php echo Html::encode($editor['title']); ?> <?php if ($editor['online'] == "true" || $editor['id'] == Yii::app()->user->id) { ?>(Online)<?php } ?>">
+                             data-original-title="<strong><?php echo Html::encode($editor['displayName']); ?></strong><br><?php echo Html::encode($editor['title']); ?> <?php if ($editor['online'] == "true" || $editor['id'] == Yii::$app->user->id) { ?>(Online)<?php } ?>">
                     </a>
                     <div class="note-editor-color" style="background: #<?php echo Html::encode($editor['color']); ?>;"></div>
                 </div>
