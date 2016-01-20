@@ -158,7 +158,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
                     $this->userColor = $this->getUserColor($user->id);
 
                     // extend array with user details from profile and user model
-                    array_push($editors, array('id' => $user->id, 'displayName' => $user->displayName, 'title' => $user->profile->title, 'image' => $user->getProfileImage()->getUrl(), 'url' => $user->getProfileUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorID)));
+                    array_push($editors, array('id' => $user->id, 'displayName' => $user->displayName, 'title' => $user->profile->title, 'image' => $user->getProfileImage()->getUrl(), 'url' => $user->getUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorID)));
                 }
             }
 
@@ -260,7 +260,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
         try {
             $this->getEtherpadClient()->createGroupPad($this->getPadGroupId(), $this->getPadId(), "This is a new pad!");
         } catch (\InvalidArgumentException $e) {
-            
+
         } catch (Exception $e) {
             # already exists
         }
