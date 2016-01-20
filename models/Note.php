@@ -164,8 +164,9 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
 
             return $editors;
         } catch (\Exception $ex) {
-            return Yii::t('NotesModule.models_Note', "Could not get note users!");
+            Yii::error(Yii::t('NotesModule.models_Note', "Could not get note users! " . $ex->getMessage()));
         }
+        return [];
     }
 
     public function getRevisionCount()
