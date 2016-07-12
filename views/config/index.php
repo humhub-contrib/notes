@@ -37,6 +37,7 @@ use humhub\compat\CActiveForm;
             <?php echo $form->labelEx($model, 'baseUrl'); ?>
             <?php echo $form->textField($model, 'baseUrl', array('class' => 'form-control')); ?>
             <?php echo $form->error($model, 'baseUrl'); ?>
+            <p class="help-block"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'e.g. http://yourdomain/pad/'); ?></p>
         </div>
 
 

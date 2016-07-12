@@ -4,8 +4,6 @@ namespace humhub\modules\notes\controllers;
 
 use Yii;
 use yii\web\HttpException;
-use yii\helpers\Html;
-use humhub\modules\user\models\User;
 use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\notes\models\Note;
 use humhub\models\Setting;
@@ -43,9 +41,13 @@ class NoteController extends ContentContainerController
      */
     public function actionCreate()
     {
+        if (!$this->contentContainer->permissionManager->can(new \humhub\modules\notes\permissions\CreateNote())) {
+            throw new HttpException(400, 'Access denied!');
+        }
+
         $note = new Note();
         $note->title = Yii::$app->request->post('title');
-        return \humhub\modules\notes\widgets\WallCreateForm::create($note);
+        return \humhub\modules\notes\widgets\WallCreateForm::create($note, $this->contentContainer);
     }
 
     /**

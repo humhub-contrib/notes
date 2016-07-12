@@ -16,6 +16,11 @@ class WallCreateForm extends \humhub\modules\content\widgets\WallCreateContentFo
 
     public function renderForm()
     {
+
+        if (!$this->contentContainer->permissionManager->can(new \humhub\modules\notes\permissions\CreateNote())) {
+            return;
+        }
+
         return $this->render('form', array());
     }
 

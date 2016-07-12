@@ -164,7 +164,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
 
             return $editors;
         } catch (\Exception $ex) {
-            Yii::error(Yii::t('NotesModule.models_Note', "Could not get note users! " . $ex->getMessage()));
+            Yii::error("Could not get note users! " . $ex->getMessage());
         }
         return [];
     }
@@ -260,7 +260,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
         try {
             $this->getEtherpadClient()->createGroupPad($this->getPadGroupId(), $this->getPadId(), "This is a new pad!");
         } catch (\InvalidArgumentException $e) {
-
+            
         } catch (Exception $e) {
             # already exists
         }
