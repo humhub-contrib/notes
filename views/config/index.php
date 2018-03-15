@@ -1,6 +1,7 @@
 <?php
 
 use humhub\models\Setting;
+use humhub\modules\notes\libs\EtherpadHelper;
 use yii\helpers\Url;
 use yii\helpers\Html;
 use humhub\modules\notes\models\Note;
@@ -18,7 +19,7 @@ use humhub\compat\CActiveForm;
         <?php if (Setting::Get('baseUrl', 'notes') != "" && Setting::Get('apiKey', 'notes') != ""): ?>
             <p><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Current Status:'); ?>
                 
-                <?php if (Note::testAPIConnection()) : ?>
+                <?php if (EtherpadHelper::testAPIConnection()) : ?>
                     <span style="color:green"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'API Connection successful!'); ?></span>
                 <?php else: ?>
                     <span style="color:red"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Could not connect to API!'); ?></span>

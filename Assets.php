@@ -17,9 +17,14 @@ class Assets extends AssetBundle
         'notes.css',
     ];
 
+
+    public $publishOptions = [
+      'forceCopy' => true
+    ];
+
     public function init()
     {
-        $this->sourcePath = dirname(__FILE__) . '/assets';
+        $this->sourcePath = dirname(__FILE__) . '/resources';
         parent::init();
     }
 

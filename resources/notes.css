@@ -15,6 +15,7 @@
     -moz-box-shadow: 1px 1px 3px #dedede;
 }
 
+/*
 .notes-sticker .notes-stripe {
     position: absolute;
     background-image: url('stripe.png');
@@ -24,12 +25,24 @@
     left: 50%;
     margin-left: -40px;
 }
+*/
 
 .notes-sticker .notes-title {
     font-weight: 300;
     font-size: 16px;
     color: #bebebe;
 }
+
+.notes-sticker .notes-line {
+    line-height:2.3em;
+    height:2.3em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
+
 
 .note-editor {
     position: relative;

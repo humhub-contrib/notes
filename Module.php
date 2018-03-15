@@ -2,16 +2,40 @@
 
 namespace humhub\modules\notes;
 
-use Yii;
-use yii\helpers\Url;
+use humhub\modules\content\components\ContentContainerActiveRecord;
+use humhub\modules\content\components\ContentContainerModule;
 use humhub\modules\notes\models\Note;
 use humhub\modules\notes\models\NoteUserColors;
 use humhub\modules\space\models\Space;
-use humhub\modules\content\components\ContentContainerActiveRecord;
-use humhub\modules\content\components\ContentContainerModule;
+use Yii;
+use yii\helpers\Url;
 
 class Module extends ContentContainerModule
 {
+    /**
+     * @inheritdoc
+     */
+    public $resourcesPath = 'resources';
+
+    public static function onSpaceMenuInit($event)
+    {
+        $space = $event->sender->space;
+        if ($space->isModuleEnabled('notes')) {
+            $event->sender->addItem(array(
+                'label' => Yii::t('NotesModule.base', 'Notes'),
+                'group' => 'modules',
+                'url' => $space->createUrl('/notes/note/show'),
+                'icon' => '<i class="fa fa-file-text"></i>',
+                'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'notes'),
+            ));
+        }
+    }
+
+    public static function onUserDelete($event)
+    {
+        NoteUserColors::deleteAll(array('user_id' => $event->sender->id));
+        return true;
+    }
 
     /**
      * @inheritdoc
@@ -56,24 +80,9 @@ class Module extends ContentContainerModule
         }
     }
 
-    public static function onSpaceMenuInit($event)
+    public function blafoo()
     {
-        $space = $event->sender->space;
-        if ($space->isModuleEnabled('notes')) {
-            $event->sender->addItem(array(
-                'label' => Yii::t('NotesModule.base', 'Notes'),
-                'group' => 'modules',
-                'url' => $space->createUrl('/notes/note/show'),
-                'icon' => '<i class="fa fa-file-text"></i>',
-                'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'notes'),
-            ));
-        }
-    }
-
-    public static function onUserDelete($event)
-    {
-        NoteUserColors::deleteAll(array('user_id' => $event->sender->id));
-        return true;
+        return "foo";
     }
 
 }
