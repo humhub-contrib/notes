@@ -17,6 +17,5 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Could not get note content!' => 'İçerik notları alınamadı!',
     'Note' => 'Not',
 ];

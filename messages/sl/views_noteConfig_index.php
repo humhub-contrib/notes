@@ -17,6 +17,13 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Editors:' => '',
-    'There are no notes yet!' => 'Ainda não existem notas!',
+    'API Connection successful!' => '',
+    'Back to modules' => '',
+    'Could not connect to API!' => '',
+    'Current Status:' => '',
+    'Notes Module Configuration' => '',
+    'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!' => '',
+    'Save & Test' => '',
+    'The notes module needs a etherpad server up and running!' => '',
+    'e.g. http://yourdomain/pad/' => '',
 ];
