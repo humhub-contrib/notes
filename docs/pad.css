@@ -24,17 +24,34 @@
 	background: #F5F5F4;
 }
 
+/*
 .toolbar ul.menu_right {
 	display: none !important;
+}
+*/
+
+
+.toolbar ul.menu_right li[data-key="embed"] {
+	display:none;
+}
+
+.toolbar ul.menu_right li[data-key="settings"] {
+	display:none;
+}
+
+.toolbar ul.menu_right li[data-key="showusers"] {
+	display:none;
 }
 
 .buttonicon-clearauthorship {
 	display: none;
 }
 
+/*
 #chaticon, #chatbox {
 	display: none !important;
 }
+*/
 
 #connectivity {
 	top: 30% !important;
