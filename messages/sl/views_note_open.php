@@ -17,6 +17,5 @@
  * NOTE: this file must be saved in UTF-8 encoding.
  */
 return [
-    'Editors:' => '',
-    'There are no notes yet!' => 'Ainda não existem notas!',
+    'Save and close' => '',
 ];
