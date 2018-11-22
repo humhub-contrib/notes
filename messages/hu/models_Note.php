@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Note' => 'Jegyzet',
+  'Note' => 'Feljegyzés',
 );
