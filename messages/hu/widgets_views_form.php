@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Title of your new note' => 'Új jegyzet cime',
+  'Title of your new note' => 'Új jegyzeted címe',
 );
