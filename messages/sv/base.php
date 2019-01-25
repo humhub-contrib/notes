@@ -1,4 +1,4 @@
 <?php
 return array (
-  'Notes' => 'Noteringar',
+  'Notes' => 'Anteckningar',
 );
