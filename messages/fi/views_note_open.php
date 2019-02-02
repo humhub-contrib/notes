@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Save and close' => '',
-];
+return array (
+  'Save and close' => 'Tallenna ja sulje',
+);

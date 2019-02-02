@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Note' => '',
-];
+return array (
+  'Note' => 'Muistiinpano',
+);

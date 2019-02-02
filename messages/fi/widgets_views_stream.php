@@ -1,6 +1,5 @@
 <?php
-
-return [
-    'Editors:' => '',
-    'There are no notes yet!' => '',
-];
+return array (
+  'Editors:' => 'Tätä muistio muokanneet:',
+  'There are no notes yet!' => 'Ei muistiinpanoja vielä!',
+);

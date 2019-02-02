@@ -1,5 +1,4 @@
 <?php
-
-return [
-    'Open note' => '',
-];
+return array (
+  'Open note' => 'Avaa muistio',
+);
