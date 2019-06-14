@@ -30,6 +30,7 @@ class NoteController extends ContentContainerController
         return array(
             'stream' => array(
                 'class' => StreamAction::className(),
+                'includes' => Note::className(),
                 'mode' => StreamAction::MODE_NORMAL,
                 'contentContainer' => $this->contentContainer
             ),
