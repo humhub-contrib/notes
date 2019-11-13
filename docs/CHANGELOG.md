@@ -1,6 +1,12 @@
 Changelog
 =========
 
+0.8.2 - 13 November, 2019
+----------------------
+- Enh: HumHub 1.4 compatiblity fix
+- Enh: Updated translations
+
+
 0.8.1 - 27 March, 2018
 ----------------------
 >Note: The pad.css has changed. Please replace it in your Etherpad installation.

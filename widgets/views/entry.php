@@ -3,8 +3,6 @@
 use humhub\modules\notes\Assets;
 use humhub\widgets\Button;
 use yii\helpers\Html;
-use yii\helpers\Url;
-use humhub\libs\Helpers;
 
 Assets::register($this);
 

@@ -9,7 +9,6 @@ class WallEntry extends \humhub\modules\content\widgets\WallEntry
     {
         return $this->render('entry', array(
                     'note' => $this->contentObject,
-                    'user' => $this->contentObject->content->user,
                     'contentContainer' => $this->contentObject->content->container));
     }
 

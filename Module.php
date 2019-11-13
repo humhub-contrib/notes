@@ -80,9 +80,4 @@ class Module extends ContentContainerModule
         }
     }
 
-    public function blafoo()
-    {
-        return "foo";
-    }
-
 }
