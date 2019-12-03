@@ -1,6 +1,12 @@
 Changelog
 =========
 
+
+0.8.3 - 03 December, 2019
+----------------------
+- Fix #27: Removed deprecated method usage
+
+
 0.8.2 - 13 November, 2019
 ----------------------
 - Enh: HumHub 1.4 compatiblity fix

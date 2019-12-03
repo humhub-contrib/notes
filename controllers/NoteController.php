@@ -69,9 +69,12 @@ class NoteController extends ContentContainerController
     public function actionOpen()
     {
         $id = (int)Yii::$app->request->get('id', 0);
+
+
+        /** @var Note $note */
         $note = Note::find()->contentContainer($this->contentContainer)->readable()->where(['note.id' => $id])->one();
 
-        if (!$note->content->canRead()) {
+        if (!$note->content->canView()) {
             throw new HttpException(401, 'Access denied!');
         }
 
