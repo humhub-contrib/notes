@@ -6,7 +6,7 @@ return array (
   'Current Status:' => '',
   'Notes Module Configuration' => '',
   'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!' => '',
-  'Save & Test' => '',
+  'Save & Test' => 'حفظ واختبار',
   'The notes module needs a etherpad server up and running!' => '',
   'e.g. http://yourdomain/pad/' => '',
 );
