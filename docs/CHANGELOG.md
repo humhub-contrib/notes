@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.9.0 - 04 November, 2019
+--------------------------
+- Enh #29: Support HumHub 1.7+ Wall Entry Design
+
 
 0.8.3 - 03 December, 2019
 ----------------------

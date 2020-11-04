@@ -2,16 +2,34 @@
 
 namespace humhub\modules\notes\widgets;
 
-class WallEntry extends \humhub\modules\content\widgets\WallEntry
-{
+use humhub\modules\content\widgets\stream\WallStreamModuleEntryWidget;
+use humhub\modules\notes\models\Note;
 
-    public function run()
+class WallEntry extends WallStreamModuleEntryWidget
+{
+    /**
+     * @var Note
+     */
+    public $model;
+
+
+    /**
+     * @inheritDoc
+     */
+    protected function renderContent()
     {
         return $this->render('entry', array(
-                    'note' => $this->contentObject,
-                    'contentContainer' => $this->contentObject->content->container));
+            'note' => $this->model,
+            'contentContainer' => $this->model->content->container));
     }
 
+    /**
+     * @inheritDoc
+     */
+    protected function getTitle()
+    {
+        return $this->model->title;
+    }
 }
 
 ?>
