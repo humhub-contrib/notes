@@ -9,4 +9,4 @@ Integrates the common Etherpad online editor in spaces.
 - Individual content colors for every note user
 - Get notifications, if users edited a note
 
-``Note:`` This module requires Etherpad Lite [http://etherpad.org](http://etherpad.org)
+`Note:` This module requires an [Etherpad Lite](http://etherpad.org) installation.
