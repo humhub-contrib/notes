@@ -1,0 +1,23 @@
+<?php
+return array (
+  'API Connection successful!' => 'API - Conexão bem sucedida!',
+  'Could not connect to API!' => 'Não foi possível conectar-se a API!',
+  'Current Status:' => 'Status atual:',
+  'Editors:' => 'Editores:',
+  'Etherpad API Key' => 'Chave da API do Etherpad',
+  'Etherpad URL Domain' => '',
+  'If the Etherpad server is not running under the same domain as the HumHub installation, the Etherpad-Lite plugin "ep_auth_session" must be used.' => '',
+  'Note' => 'Nota',
+  'Notes' => 'Notas',
+  'Notes Module Configuration' => 'Configuração do Módulo de Notas',
+  'Open note' => 'Abrir nota',
+  'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!' => 'Por favor, leia a documentação do módulo em  protected/modules/notes/docs/install.txt para mais detalhes!',
+  'Plugin Homepage' => '',
+  'Save and close' => 'Salvar e fechar',
+  'The notes module needs a etherpad server up and running!' => 'O módulo de notas precisa de um servidor EtherPad Up e executando!',
+  'There are no notes yet!' => 'Ainda não existem notas!',
+  'Title of your new note' => 'Título da sua nova nota',
+  'URL to Etherpad' => 'URL para Etherpad',
+  'Use Etherpad Plugin: ep_auth_session' => '',
+  'e.g. http://yourdomain/pad/' => 'ex. http://seudominio/pad/',
+);

@@ -1,0 +1,23 @@
+<?php
+return array (
+  'API Connection successful!' => 'API konekcija uspješna!',
+  'Could not connect to API!' => 'Nije se moguće spojiti na API!',
+  'Current Status:' => 'Trenutačni status:',
+  'Editors:' => '',
+  'Etherpad API Key' => 'API ključ Etherpada',
+  'Etherpad URL Domain' => '',
+  'If the Etherpad server is not running under the same domain as the HumHub installation, the Etherpad-Lite plugin "ep_auth_session" must be used.' => '',
+  'Note' => 'Bilješka',
+  'Notes' => 'Bilješke',
+  'Notes Module Configuration' => 'Konfiguracija modula bilješki',
+  'Open note' => 'Otvori bilješku',
+  'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!' => 'Pročitajte dokumentaciju modula pod /protected/modules/notes/docs/install.txt za više detalja!',
+  'Plugin Homepage' => '',
+  'Save and close' => 'Spremi i zatvori',
+  'The notes module needs a etherpad server up and running!' => 'Modul bilješku treba etherpad server!',
+  'There are no notes yet!' => 'Još nema bilješki!',
+  'Title of your new note' => 'Naslov vaše nove bilješke',
+  'URL to Etherpad' => 'URL prema Etherpad',
+  'Use Etherpad Plugin: ep_auth_session' => '',
+  'e.g. http://yourdomain/pad/' => 'e.g. http://yourdomain/pad/',
+);

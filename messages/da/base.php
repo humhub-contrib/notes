@@ -1,0 +1,23 @@
+<?php
+return array (
+  'API Connection successful!' => 'API Forbindelse udført!',
+  'Could not connect to API!' => 'Kunne ikke forbinde til API!',
+  'Current Status:' => 'Nuværende Status:',
+  'Editors:' => '',
+  'Etherpad API Key' => 'Etherpad API Nøgle',
+  'Etherpad URL Domain' => '',
+  'If the Etherpad server is not running under the same domain as the HumHub installation, the Etherpad-Lite plugin "ep_auth_session" must be used.' => '',
+  'Note' => 'Note',
+  'Notes' => 'Noter',
+  'Notes Module Configuration' => 'Notes Modul Konfiguration',
+  'Open note' => 'Åbn note',
+  'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!' => 'Venligst læs modul dokumentationen i /protected/modules/notes/docs/install.txt for yderligere detaljer!',
+  'Plugin Homepage' => '',
+  'Save and close' => 'Gem og luk',
+  'The notes module needs a etherpad server up and running!' => 'Note modulet skal bruge etherpad server kørende!',
+  'There are no notes yet!' => 'Der er ingen notater endnu!',
+  'Title of your new note' => 'Titelen på din nye note',
+  'URL to Etherpad' => 'URL til Etherpad',
+  'Use Etherpad Plugin: ep_auth_session' => '',
+  'e.g. http://yourdomain/pad/' => '',
+);

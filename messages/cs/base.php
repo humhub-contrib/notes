@@ -1,0 +1,23 @@
+<?php
+return array (
+  'API Connection successful!' => 'Připojení k API bylo úspěšné!',
+  'Could not connect to API!' => 'Nebylo možné se připojit k API!',
+  'Current Status:' => 'Aktuální stav:',
+  'Editors:' => '',
+  'Etherpad API Key' => 'API klíč pro Etherpad',
+  'Etherpad URL Domain' => '',
+  'If the Etherpad server is not running under the same domain as the HumHub installation, the Etherpad-Lite plugin "ep_auth_session" must be used.' => '',
+  'Note' => 'Poznámka',
+  'Notes' => 'Poznámky',
+  'Notes Module Configuration' => 'Nastavení modulu Poznámky',
+  'Open note' => 'Otevřít poznámku',
+  'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!' => 'Pro více informací si prosím přečtěte dokumentaci modulu v /protected/modules/notes/docs/install.txt',
+  'Plugin Homepage' => '',
+  'Save and close' => 'Uložit a zavřít',
+  'The notes module needs a etherpad server up and running!' => 'Modul Poznámky vyžaduje ke svému provozu běžící etherpad server!',
+  'There are no notes yet!' => 'Zatím zde nejsou žádné poznámky!',
+  'Title of your new note' => 'Název nové poznámky',
+  'URL to Etherpad' => 'URL k Etherpadu',
+  'Use Etherpad Plugin: ep_auth_session' => '',
+  'e.g. http://yourdomain/pad/' => 'například: http://vasedomena.cz/poznamky',
+);
