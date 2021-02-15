@@ -89,7 +89,19 @@ class NoteController extends ContentContainerController
         $validUntil = mktime(0, 0, 0, date("m"), date("d") + 1, date("y")); // One day in the future
         $sessionID = EtherpadHelper::getPadClient()->createSession(EtherpadHelper::getPadGroupId($this->contentContainer), EtherpadHelper::getPadAuthorId(), $validUntil);
         $sessionID = $sessionID->sessionID;
-        setcookie("sessionID", $sessionID, $validUntil, '/'); // Set a cookie
+
+        $domain = substr(yii\helpers\Url::base(''), 2);
+        if (strpos($domain, '/') !== false) {
+            $domain = substr($domain, 0, strpos($domain, '/'));
+        }
+
+        // reduce domain from humhub.xyz.com to xyz.com
+        $domainParts = array_reverse(explode('.', $domain));
+        if (count($domainParts) > 2) {
+            $domain = $domainParts[1] . '.' . $domainParts[0];
+        }
+
+        setcookie("sessionID", $sessionID, $validUntil, '/', $domain);
 
         $note->tryCreatePad();
 

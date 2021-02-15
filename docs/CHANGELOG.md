@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.10.1 - 15 February, 2021
+--------------------------
+- Enh #15: Use Base Domain for Etherpad Lite Cookie
+
 
 0.10.0 - 15 February, 2021
 --------------------------
