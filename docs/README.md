@@ -1,6 +1,6 @@
 # Etherpad Editor
 
-Integrates the common Etherpad online editor in spaces.
+Integrates the common Etherpad-Lite online editor as Notes in Spaces.
 
 ### Features
 

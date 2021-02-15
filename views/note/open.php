@@ -11,13 +11,11 @@ $saveLinkUrl = $note->content->container->createUrl('/notes/note/edit', ['id' =>
 <div class="panel panel-default" id="note_content">
 
     <div class="panel-heading"><?php echo Html::encode($note->title); ?></div>
-
-    <!-- iframe container for etherpad -->
-    <iframe id="note" src="<?= $padUrl; ?>" height="400" width="100%"></iframe>
+    <iframe id="note" src="<?= $padUrl; ?>>" height="400" width="100%"></iframe>
 
     <?php if (count($editors) > 0) { ?>
         <div class="panel-body">
-            <div style="font-size: 12px; margin-bottom: 5px;"><?= Yii::t('NotesModule.widgets_views_stream', 'Editors:'); ?></div>
+            <div style="font-size: 12px; margin-bottom: 5px;"><?= Yii::t('NotesModule.base', 'Editors:'); ?></div>
             <?php foreach ($editors as $editor) : ?>
                 <div class="note-editor">
                     <a href="<?php echo $editor['url']; ?>">
@@ -37,7 +35,7 @@ $saveLinkUrl = $note->content->container->createUrl('/notes/note/edit', ['id' =>
 
     <hr>
     <div class="panel-body">
-        <?= Button::primary(Yii::t('NotesModule.views_note_open', 'Save and close'))->link($saveLinkUrl); ?>
+        <?= Button::primary(Yii::t('NotesModule.base', 'Save and close'))->link($saveLinkUrl); ?>
     </div>
 
 </div>

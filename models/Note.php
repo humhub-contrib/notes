@@ -61,6 +61,8 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
             'updated_by' => 'Updated By',
         );
     }
+    
+
 
     /**
      * Returns contributed user for this Pad
@@ -161,7 +163,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
      */
     public function getContentName()
     {
-        return Yii::t('NotesModule.models_Note', "Note");
+        return Yii::t('NotesModule.base', "Note");
     }
 
     /**
@@ -195,7 +197,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
             return $content->text;
         } catch (\Exception $ex) {
             return '';
-            //return Yii::t('NotesModule.models_Note', "Could not get note content!");
+            //return Yii::t('NotesModule.base', "Could not get note content!");
         }
     }
 

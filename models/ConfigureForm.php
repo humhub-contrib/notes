@@ -10,16 +10,18 @@ class ConfigureForm extends Model
 
     public $baseUrl;
     public $apiKey;
+    public $epAuthSessionPlugin;
 
     /**
      * Declares the validation rules.
      */
     public function rules()
     {
-        return array(
-            array(['apiKey', 'baseUrl'], 'required'),
-            array('apiKey', 'string', 'max' => 250),
-        );
+        return [
+            [['apiKey', 'baseUrl'], 'required'],
+            [['epAuthSessionPlugin'], 'boolean'],
+            ['apiKey', 'string', 'max' => 250],
+        ];
     }
 
     /**
@@ -30,9 +32,17 @@ class ConfigureForm extends Model
     public function attributeLabels()
     {
         return array(
-            'baseUrl' => Yii::t('NotesModule.forms_NotesConfigureForm', 'URL to Etherpad'),
-            'apiKey' => Yii::t('NotesModule.forms_NotesConfigureForm', 'Etherpad API Key'),
+            'baseUrl' => Yii::t('NotesModule.base', 'URL to Etherpad'),
+            'apiKey' => Yii::t('NotesModule.base', 'Etherpad API Key'),
+            'epAuthSessionPlugin' => Yii::t('NotesModule.base', 'Use Etherpad Plugin: ep_auth_session'),
         );
     }
 
+    public function attributeHints()
+    {
+        return [
+            'baseUrl' => Yii::t('NotesModule.base', 'e.g. http://yourdomain/pad/'),
+            'apiKey' => '',
+        ];
+    }
 }

@@ -1,6 +1,14 @@
 Changelog
 =========
 
+
+0.10.0 - 15 February, 2021
+--------------------------
+- Enh: Added Plugin Support for ep_auth_session 
+- Enh: Combined Translation Message Files
+- Enh: Minor Code Cleanups
+
+
 0.9.0 - 04 November, 2019
 --------------------------
 - Enh #29: Support HumHub 1.7+ Wall Entry Design

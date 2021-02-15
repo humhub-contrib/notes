@@ -19,4 +19,4 @@ $openUrl = $note->content->container->createUrl('/notes/note/open', ['id' => $no
 </div>
 
 <br/>
-<?= Button::primary(Yii::t('NotesModule.widgets_views_entry', 'Open note'))->link($openUrl) ?>
+<?= Button::primary(Yii::t('NotesModule.base', 'Open note'))->link($openUrl) ?>

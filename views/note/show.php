@@ -13,7 +13,7 @@ use humhub\modules\notes\widgets\WallCreateForm;
 echo Stream::widget([
     'contentContainer' => $contentContainer,
     'streamAction' => '/notes/note/stream',
-    'messageStreamEmpty' => Yii::t('NotesModule.widgets_views_stream', 'There are no notes yet!'),
+    'messageStreamEmpty' => Yii::t('NotesModule.base', 'There are no notes yet!'),
     'messageStreamEmptyCss' => (!$contentContainer->permissionManager->can(new CreateNote())) ? 'placeholder-empty-stream' : '',
     'filters' => []
 ]);

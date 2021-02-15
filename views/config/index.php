@@ -2,58 +2,54 @@
 
 use humhub\models\Setting;
 use humhub\modules\notes\libs\EtherpadHelper;
-use yii\helpers\Url;
-use yii\helpers\Html;
-use humhub\modules\notes\models\Note;
-use humhub\compat\CActiveForm;
+use humhub\modules\ui\form\widgets\ActiveForm;
+use humhub\widgets\Button;
+
 ?>
 <div class="panel panel-default">
-    <div class="panel-heading"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Notes Module Configuration'); ?></div>
+    <div class="panel-heading"><?= Yii::t('NotesModule.base', 'Notes Module Configuration'); ?></div>
     <div class="panel-body">
 
 
-        <p><?php echo Yii::t('NotesModule.views_noteConfig_index', 'The notes module needs a etherpad server up and running!'); ?><br>
-            <?php echo Yii::t('NotesModule.views_noteConfig_index', 'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!'); ?></p>
+        <p><?= Yii::t('NotesModule.base', 'The notes module needs a etherpad server up and running!'); ?>
+            <br>
+            <?= Yii::t('NotesModule.base', 'Please read the module documentation under /protected/modules/notes/docs/install.txt for more details!'); ?>
+        </p>
 
         <br/>
         <?php if (Setting::Get('baseUrl', 'notes') != "" && Setting::Get('apiKey', 'notes') != ""): ?>
-            <p><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Current Status:'); ?>
-                
+            <p><?= Yii::t('NotesModule.base', 'Current Status:'); ?>
+
                 <?php if (EtherpadHelper::testAPIConnection()) : ?>
-                    <span style="color:green"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'API Connection successful!'); ?></span>
+                    <span style="color:green"><?= Yii::t('NotesModule.base', 'API Connection successful!'); ?></span>
                 <?php else: ?>
-                    <span style="color:red"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Could not connect to API!'); ?></span>
+                    <span style="color:red"><?= Yii::t('NotesModule.base', 'Could not connect to API!'); ?></span>
                 <?php endif; ?>
             </p>
         <?php endif; ?>
 
         <br/>
-        <br/>
 
-        <?php $form = CActiveForm::begin(); ?>
+        <?php $form = ActiveForm::begin(); ?>
 
-        <?php echo $form->errorSummary($model); ?>
+        <?= $form->errorSummary($model); ?>
 
-        <div class="form-group">
-            <?php echo $form->labelEx($model, 'baseUrl'); ?>
-            <?php echo $form->textField($model, 'baseUrl', array('class' => 'form-control')); ?>
-            <?php echo $form->error($model, 'baseUrl'); ?>
-            <p class="help-block"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'e.g. http://yourdomain/pad/'); ?></p>
+        <?= $form->field($model, 'baseUrl'); ?>
+
+        <div class="alert alert-info">
+            <strong><?= Yii::t('NotesModule.base', 'Etherpad URL Domain'); ?></strong>
+            <p>
+                <?= Yii::t('NotesModule.base', 'If the Etherpad server is not running under the same domain as the HumHub installation, the Etherpad-Lite plugin "ep_auth_session" must be used.'); ?>
+                <a href="https://www.npmjs.com/package/ep_auth_session"><?= Yii::t('NotesModule.base', 'Plugin Homepage'); ?></a>
+            </p>
         </div>
+        <?= $form->field($model, 'epAuthSessionPlugin')->checkbox(); ?>
 
-
-        <div class="form-group">
-            <?php echo $form->labelEx($model, 'apiKey'); ?>
-            <?php echo $form->textField($model, 'apiKey', array('class' => 'form-control')); ?>
-            <?php echo $form->error($model, 'apiKey'); ?>
-        </div>
-
-
+        <?= $form->field($model, 'apiKey'); ?>
 
         <hr>
-        <?php echo Html::submitButton(Yii::t('NotesModule.views_noteConfig_index', 'Save & Test'), array('class' => 'btn btn-primary')); ?>
-        <a class="btn btn-default" href="<?php echo Url::to(['/admin/module']); ?>"><?php echo Yii::t('NotesModule.views_noteConfig_index', 'Back to modules'); ?></a>
+        <?= Button::save()->submit() ?>
 
-        <?php CActiveForm::end(); ?>
+        <?php ActiveForm::end(); ?>
     </div>
 </div>

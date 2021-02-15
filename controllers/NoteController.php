@@ -6,12 +6,19 @@ use humhub\models\Setting;
 use humhub\modules\content\components\ContentContainerController;
 use humhub\modules\notes\libs\EtherpadHelper;
 use humhub\modules\notes\models\Note;
+use humhub\modules\notes\Module;
 use humhub\modules\notes\permissions\CreateNote;
 use humhub\modules\notes\StreamAction;
 use humhub\modules\notes\widgets\WallCreateForm;
 use Yii;
 use yii\web\HttpException;
 
+/**
+ * Class NoteController
+ *
+ * @property Module $module
+ * @package humhub\modules\notes\controllers
+ */
 class NoteController extends ContentContainerController
 {
 
@@ -86,8 +93,14 @@ class NoteController extends ContentContainerController
 
         $note->tryCreatePad();
 
-        $url = Setting::Get('baseUrl', 'notes');
-        $padUrl = $url . "p/" . $note->getPadNameInternal() . "?showChat=true&showLineNumbers=false&userColor=%23" . EtherpadHelper::getUserColor(Yii::$app->user->getIdentity());
+        $url = $this->module->settings->get('baseUrl');
+
+        if (!empty($this->module->settings->get('epAuthSessionPlugin'))) {
+            // Use ep_auth_session plugin
+            $padUrl = $url . "auth_session?sessionID=" . $sessionID . "&padName=" . $note->getPadNameInternal();
+        } else {
+            $padUrl = $url . "p/" . $note->getPadNameInternal() . "?sessionID=" . $sessionID . "&showChat=true&showLineNumbers=false&userColor=%23" . EtherpadHelper::getUserColor(Yii::$app->user->getIdentity());
+        }
 
         return $this->render('open', array(
             'contentContainer' => $this->contentContainer,
