@@ -1,6 +1,11 @@
 Changelog
 =========
 
+0.10.2 - 21 August, 2021
+------------------------
+- Fix #33: Fix broken $padUrl in iframe
+
+
 0.10.1 - 15 February, 2021
 --------------------------
 - Enh #15: Use Base Domain for Etherpad Lite Cookie
