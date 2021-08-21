@@ -11,7 +11,7 @@ $saveLinkUrl = $note->content->container->createUrl('/notes/note/edit', ['id' =>
 <div class="panel panel-default" id="note_content">
 
     <div class="panel-heading"><?php echo Html::encode($note->title); ?></div>
-    <iframe id="note" src="<?= $padUrl; ?>>" height="400" width="100%"></iframe>
+    <iframe id="note" src="<?= $padUrl; ?>" height="400" width="100%"></iframe>
 
     <?php if (count($editors) > 0) { ?>
         <div class="panel-body">
