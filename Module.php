@@ -19,8 +19,9 @@ class Module extends ContentContainerModule
 
     public static function onSpaceMenuInit($event)
     {
+        /** @var Space $space */
         $space = $event->sender->space;
-        if ($space->isModuleEnabled('notes')) {
+        if ($space->moduleManager->isEnabled('notes')) {
             $event->sender->addItem(array(
                 'label' => Yii::t('NotesModule.base', 'Notes'),
                 'group' => 'modules',

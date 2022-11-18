@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.10.3 (Unreleased)
+------------------------
+- Fix: Refactored deprecated method call 
+
 0.10.2 - 21 August, 2021
 ------------------------
 - Fix #33: Fix broken $padUrl in iframe
