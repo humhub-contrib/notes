@@ -2,8 +2,8 @@
 return array (
   'API Connection successful!' => 'A ligação API funcionou!',
   'Could not connect to API!' => 'Não foi possível ligar à API!',
-  'Current Status:' => 'Estado actual:',
-  'Editors:' => 'Quem editou:',
+  'Current Status:' => 'Estado Atual:',
+  'Editors:' => 'Editores:',
   'Etherpad API Key' => 'Etherpad API Key',
   'Etherpad URL Domain' => 'URL do domínio Etherpad',
   'If the Etherpad server is not running under the same domain as the HumHub installation, the Etherpad-Lite plugin "ep_auth_session" must be used.' => 'Se o servidor Etherpad não está a correr sob o mesmo domíno que a instalação HumHub, o plugon Etherpad-Lite "ep_auth_session" tem de ser usado.',
