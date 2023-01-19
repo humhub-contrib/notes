@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.11.0 (Unreleased)
+------------------------
+- Fix: Update wall create form
+
 0.10.3 (Unreleased)
 ------------------------
 - Fix: Refactored deprecated method call 
