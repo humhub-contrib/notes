@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.11.0 (Unreleased)
-------------------------
+0.11.0 (January 19, 2023)
+-------------------------
 - Fix: Update wall create form
 
 0.10.3 (Unreleased)
