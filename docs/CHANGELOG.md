@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.12.0 (Unreleased)
+-------------------------
+- Fix #36: Hard delete records on disable module
+
 0.11.0 (January 19, 2023)
 -------------------------
 - Fix: Update wall create form
