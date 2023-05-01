@@ -61,9 +61,8 @@ class Module extends ContentContainerModule
      */
     public function disable()
     {
-
         foreach (Note::find()->all() as $note) {
-            $note->delete();
+            $note->hardDelete();
         }
 
         parent::disable();
@@ -77,7 +76,7 @@ class Module extends ContentContainerModule
         parent::disableContentContainer($container);
 
         foreach (Note::find()->contentContainer($container)->all() as $note) {
-            $note->delete();
+            $note->hardDelete();
         }
     }
 
