@@ -44,8 +44,16 @@ class Module extends ContentContainerModule
     public function getContentContainerTypes()
     {
         return [
-            Space::className(),
+            Space::class,
         ];
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function getContentClasses(): array
+    {
+        return [Note::class];
     }
 
     /**
