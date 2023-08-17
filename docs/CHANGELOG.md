@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.12.1 (Unreleased)
+--------------------
+- Fix #38: Initialize module content class
+
 0.12.0 (May 1, 2023)
 --------------------
 - Fix #36: Hard delete records on disable module
@@ -59,4 +63,3 @@ Changelog
 - Enh: Switched to new Button API
 - Fix: Wall entry background
 - Chg: Resources path from assets -> resources
-
