@@ -12,11 +12,6 @@ use yii\helpers\Url;
 
 class Module extends ContentContainerModule
 {
-    /**
-     * @inheritdoc
-     */
-    public $resourcesPath = 'resources';
-
     public static function onSpaceMenuInit($event)
     {
         /** @var Space $space */

@@ -6,26 +6,21 @@
  * @license https://www.humhub.com/licences
  */
 
-namespace humhub\modules\notes;
+namespace humhub\modules\notes\assets;
 
 use yii\web\AssetBundle;
 
 class Assets extends AssetBundle
 {
+    /**
+     * @inheritdoc
+     */
+    public $sourcePath = '@notes/resources';
 
+    /**
+     * @inheritdoc
+     */
     public $css = [
         'notes.css',
     ];
-
-
-    public $publishOptions = [
-      'forceCopy' => true
-    ];
-
-    public function init()
-    {
-        $this->sourcePath = dirname(__FILE__) . '/resources';
-        parent::init();
-    }
-
 }

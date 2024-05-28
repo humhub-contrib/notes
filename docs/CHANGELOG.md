@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.13.0 (Unreleased)
+--------------------
+- Fix #39: Update module resources path
+
 0.12.1 (Unreleased)
 --------------------
 - Fix #38: Initialize module content class
