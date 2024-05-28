@@ -1,6 +1,6 @@
 <?php
 
-use humhub\modules\notes\Assets;
+use humhub\modules\notes\assets\Assets;
 use humhub\widgets\Button;
 use yii\helpers\Html;
 
