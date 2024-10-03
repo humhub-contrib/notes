@@ -4,6 +4,7 @@ Changelog
 0.12.1 (Unreleased)
 --------------------
 - Fix #38: Initialize module content class
+- Enh #40: Use PHP CS Fixer
 
 0.12.0 (May 1, 2023)
 --------------------
