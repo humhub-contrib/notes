@@ -2,7 +2,6 @@
 
 class uninstall extends yii\db\Migration
 {
-
     public function up()
     {
 

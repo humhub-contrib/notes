@@ -18,9 +18,9 @@ class WallEntry extends WallStreamModuleEntryWidget
      */
     protected function renderContent()
     {
-        return $this->render('entry', array(
+        return $this->render('entry', [
             'note' => $this->model,
-            'contentContainer' => $this->model->content->container));
+            'contentContainer' => $this->model->content->container]);
     }
 
     /**
@@ -31,5 +31,3 @@ class WallEntry extends WallStreamModuleEntryWidget
         return $this->model->title;
     }
 }
-
-?>

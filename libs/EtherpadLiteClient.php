@@ -8,13 +8,12 @@ use humhub\models\Setting;
 
 class EtherpadLiteClient
 {
-
-    const API_VERSION = '1.1';
-    const CODE_OK = 0;
-    const CODE_INVALID_PARAMETERS = 1;
-    const CODE_INTERNAL_ERROR = 2;
-    const CODE_INVALID_FUNCTION = 3;
-    const CODE_INVALID_API_KEY = 4;
+    public const API_VERSION = '1.1';
+    public const CODE_OK = 0;
+    public const CODE_INVALID_PARAMETERS = 1;
+    public const CODE_INTERNAL_ERROR = 2;
+    public const CODE_INVALID_FUNCTION = 3;
+    public const CODE_INVALID_API_KEY = 4;
 
     protected $apiKey = "";
     protected $baseUrl = "http://localhost:9001/api";
@@ -34,18 +33,18 @@ class EtherpadLiteClient
         }
     }
 
-    protected function get($function, array $arguments = array())
+    protected function get($function, array $arguments = [])
     {
         return $this->call($function, $arguments, 'GET');
     }
 
-    protected function post($function, array $arguments = array())
+    protected function post($function, array $arguments = [])
     {
         return $this->call($function, $arguments, 'GET');
         #return $this->call($function, $arguments, 'POST');
     }
 
-    protected function call($function, array $arguments = array(), $method = 'GET')
+    protected function call($function, array $arguments = [], $method = 'GET')
     {
         $arguments['apikey'] = $this->apiKey;
         $arguments = http_build_query($arguments, '', '&');
@@ -68,7 +67,7 @@ class EtherpadLiteClient
             curl_close($c);
             // fallback to plain php
         } else {
-            $params = array('http' => array('method' => $method, 'ignore_errors' => true, 'header' => 'Content-Type:application/x-www-form-urlencoded'));
+            $params = ['http' => ['method' => $method, 'ignore_errors' => true, 'header' => 'Content-Type:application/x-www-form-urlencoded']];
             if ($method === 'POST') {
                 $params['http']['content'] = $arguments;
             }
@@ -119,44 +118,44 @@ class EtherpadLiteClient
 
     // GROUPS
     // Pads can belong to a group. There will always be public pads that doesnt belong to a group (or we give this group the id 0)
-    // creates a new group 
+    // creates a new group
     public function createGroup()
     {
         return $this->post("createGroup");
     }
 
-    // this functions helps you to map your application group ids to etherpad lite group ids 
+    // this functions helps you to map your application group ids to etherpad lite group ids
     public function createGroupIfNotExistsFor($groupMapper)
     {
-        return $this->post("createGroupIfNotExistsFor", array(
-                    "groupMapper" => $groupMapper
-        ));
+        return $this->post("createGroupIfNotExistsFor", [
+            "groupMapper" => $groupMapper,
+        ]);
     }
 
-    // deletes a group 
+    // deletes a group
     public function deleteGroup($groupID)
     {
-        return $this->post("deleteGroup", array(
-                    "groupID" => $groupID
-        ));
+        return $this->post("deleteGroup", [
+            "groupID" => $groupID,
+        ]);
     }
 
     // returns all pads of this group
     public function listPads($groupID)
     {
-        return $this->get("listPads", array(
-                    "groupID" => $groupID
-        ));
+        return $this->get("listPads", [
+            "groupID" => $groupID,
+        ]);
     }
 
-    // creates a new pad in this group 
+    // creates a new pad in this group
     public function createGroupPad($groupID, $padName, $text)
     {
-        return $this->post("createGroupPad", array(
-                    "groupID" => $groupID,
-                    "padName" => $padName,
-                    "text" => $text
-        ));
+        return $this->post("createGroupPad", [
+            "groupID" => $groupID,
+            "padName" => $padName,
+            "text" => $text,
+        ]);
     }
 
     // list all groups
@@ -166,92 +165,92 @@ class EtherpadLiteClient
     }
 
     // AUTHORS
-    // Theses authors are bind to the attributes the users choose (color and name). 
-    // creates a new author 
+    // Theses authors are bind to the attributes the users choose (color and name).
+    // creates a new author
     public function createAuthor($name)
     {
-        return $this->post("createAuthor", array(
-                    "name" => $name
-        ));
+        return $this->post("createAuthor", [
+            "name" => $name,
+        ]);
     }
 
-    // this functions helps you to map your application author ids to etherpad lite author ids 
+    // this functions helps you to map your application author ids to etherpad lite author ids
     public function createAuthorIfNotExistsFor($authorMapper, $name)
     {
-        return $this->post("createAuthorIfNotExistsFor", array(
-                    "authorMapper" => $authorMapper,
-                    "name" => $name
-        ));
+        return $this->post("createAuthorIfNotExistsFor", [
+            "authorMapper" => $authorMapper,
+            "name" => $name,
+        ]);
     }
 
     // returns the ids of all pads this author as edited
     public function listPadsOfAuthor($authorID)
     {
-        return $this->get("listPadsOfAuthor", array(
-                    "authorID" => $authorID
-        ));
+        return $this->get("listPadsOfAuthor", [
+            "authorID" => $authorID,
+        ]);
     }
 
     // Gets an author's name
     public function getAuthorName($authorID)
     {
-        return $this->get("getAuthorName", array(
-                    "authorID" => $authorID
-        ));
+        return $this->get("getAuthorName", [
+            "authorID" => $authorID,
+        ]);
     }
 
     // SESSIONS
     // Sessions can be created between a group and a author. This allows
     // an author to access more than one group. The sessionID will be set as
     // a cookie to the client and is valid until a certian date.
-    // creates a new session 
+    // creates a new session
     public function createSession($groupID, $authorID, $validUntil)
     {
-        return $this->post("createSession", array(
-                    "groupID" => $groupID,
-                    "authorID" => $authorID,
-                    "validUntil" => $validUntil
-        ));
+        return $this->post("createSession", [
+            "groupID" => $groupID,
+            "authorID" => $authorID,
+            "validUntil" => $validUntil,
+        ]);
     }
 
-    // deletes a session 
+    // deletes a session
     public function deleteSession($sessionID)
     {
-        return $this->post("deleteSession", array(
-                    "sessionID" => $sessionID
-        ));
+        return $this->post("deleteSession", [
+            "sessionID" => $sessionID,
+        ]);
     }
 
-    // returns informations about a session 
+    // returns informations about a session
     public function getSessionInfo($sessionID)
     {
-        return $this->get("getSessionInfo", array(
-                    "sessionID" => $sessionID
-        ));
+        return $this->get("getSessionInfo", [
+            "sessionID" => $sessionID,
+        ]);
     }
 
-    // returns all sessions of a group 
+    // returns all sessions of a group
     public function listSessionsOfGroup($groupID)
     {
-        return $this->get("listSessionsOfGroup", array(
-                    "groupID" => $groupID
-        ));
+        return $this->get("listSessionsOfGroup", [
+            "groupID" => $groupID,
+        ]);
     }
 
-    // returns all sessions of an author 
+    // returns all sessions of an author
     public function listSessionsOfAuthor($authorID)
     {
-        return $this->get("listSessionsOfAuthor", array(
-                    "authorID" => $authorID
-        ));
+        return $this->get("listSessionsOfAuthor", [
+            "authorID" => $authorID,
+        ]);
     }
 
     // PAD CONTENT
     // Pad content can be updated and retrieved through the API
-    // returns the text of a pad 
+    // returns the text of a pad
     public function getText($padID, $rev = null)
     {
-        $params = array("padID" => $padID);
+        $params = ["padID" => $padID];
         if (isset($rev)) {
             $params["rev"] = $rev;
         }
@@ -261,29 +260,29 @@ class EtherpadLiteClient
     // returns the text of a pad as html
     public function getHTML($padID, $rev = null)
     {
-        $params = array("padID" => $padID);
+        $params = ["padID" => $padID];
         if (isset($rev)) {
             $params["rev"] = $rev;
         }
         return $this->get("getHTML", $params);
     }
 
-    // sets the text of a pad 
+    // sets the text of a pad
     public function setText($padID, $text)
     {
-        return $this->post("setText", array(
-                    "padID" => $padID,
-                    "text" => $text
-        ));
+        return $this->post("setText", [
+            "padID" => $padID,
+            "text" => $text,
+        ]);
     }
 
-    // sets the html text of a pad 
+    // sets the html text of a pad
     public function setHTML($padID, $html)
     {
-        return $this->post("setHTML", array(
-                    "padID" => $padID,
-                    "html" => $html
-        ));
+        return $this->post("setHTML", [
+            "padID" => $padID,
+            "html" => $html,
+        ]);
     }
 
     // PAD
@@ -293,112 +292,112 @@ class EtherpadLiteClient
     // creates a new pad
     public function createPad($padID, $text)
     {
-        return $this->post("createPad", array(
-                    "padID" => $padID,
-                    "text" => $text
-                        ), 'POST');
+        return $this->post("createPad", [
+            "padID" => $padID,
+            "text" => $text,
+        ], 'POST');
     }
 
-    // returns the number of revisions of this pad 
+    // returns the number of revisions of this pad
     public function getRevisionsCount($padID)
     {
-        return $this->get("getRevisionsCount", array(
-                    "padID" => $padID
-        ));
+        return $this->get("getRevisionsCount", [
+            "padID" => $padID,
+        ]);
     }
 
     // returns the number of users currently editing this pad
     public function padUsersCount($padID)
     {
-        return $this->get("padUsersCount", array(
-                    "padID" => $padID
-        ));
+        return $this->get("padUsersCount", [
+            "padID" => $padID,
+        ]);
     }
 
     // return the time the pad was last edited as a Unix timestamp
     public function getLastEdited($padID)
     {
-        return $this->get("getLastEdited", array(
-                    "padID" => $padID
-        ));
+        return $this->get("getLastEdited", [
+            "padID" => $padID,
+        ]);
     }
 
-    // deletes a pad 
+    // deletes a pad
     public function deletePad($padID)
     {
-        return $this->post("deletePad", array(
-                    "padID" => $padID
-        ));
+        return $this->post("deletePad", [
+            "padID" => $padID,
+        ]);
     }
 
-    // returns the read only link of a pad 
+    // returns the read only link of a pad
     public function getReadOnlyID($padID)
     {
-        return $this->get("getReadOnlyID", array(
-                    "padID" => $padID
-        ));
+        return $this->get("getReadOnlyID", [
+            "padID" => $padID,
+        ]);
     }
 
     // returns the ids of all authors who've edited this pad
     public function listAuthorsOfPad($padID)
     {
-        return $this->get("listAuthorsOfPad", array(
-                    "padID" => $padID
-        ));
+        return $this->get("listAuthorsOfPad", [
+            "padID" => $padID,
+        ]);
     }
 
-    // sets a boolean for the public status of a pad 
+    // sets a boolean for the public status of a pad
     public function setPublicStatus($padID, $publicStatus)
     {
         if (is_bool($publicStatus)) {
             $publicStatus = $publicStatus ? "true" : "false";
         }
-        return $this->post("setPublicStatus", array(
-                    "padID" => $padID,
-                    "publicStatus" => $publicStatus
-        ));
+        return $this->post("setPublicStatus", [
+            "padID" => $padID,
+            "publicStatus" => $publicStatus,
+        ]);
     }
 
-    // return true of false 
+    // return true of false
     public function getPublicStatus($padID)
     {
-        return $this->get("getPublicStatus", array(
-                    "padID" => $padID
-        ));
+        return $this->get("getPublicStatus", [
+            "padID" => $padID,
+        ]);
     }
 
-    // returns ok or a error message 
+    // returns ok or a error message
     public function setPassword($padID, $password)
     {
-        return $this->post("setPassword", array(
-                    "padID" => $padID,
-                    "password" => $password
-        ));
+        return $this->post("setPassword", [
+            "padID" => $padID,
+            "password" => $password,
+        ]);
     }
 
-    // returns true or false 
+    // returns true or false
     public function isPasswordProtected($padID)
     {
-        return $this->get("isPasswordProtected", array(
-                    "padID" => $padID
-        ));
+        return $this->get("isPasswordProtected", [
+            "padID" => $padID,
+        ]);
     }
 
     // Get pad users
     public function padUsers($padID)
     {
-        return $this->get("padUsers", array(
-                    "padID" => $padID
-        ));
+        return $this->get("padUsers", [
+            "padID" => $padID,
+        ]);
     }
 
     // Send all clients a message
     public function sendClientsMessage($padID, $msg)
     {
-        return $this->post("sendClientsMessage", array(
-                    "padID" => $padID,
-                    "msg" => $msg
-        ));
+        return $this->post("sendClientsMessage", [
+            "padID" => $padID,
+            "msg" => $msg,
+        ]);
     }
 
     /**

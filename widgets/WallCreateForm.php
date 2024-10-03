@@ -16,7 +16,6 @@ use humhub\modules\ui\form\widgets\ActiveForm;
  */
 class WallCreateForm extends WallCreateContentForm
 {
-
     public $submitUrl = '/notes/note/create';
 
     /**

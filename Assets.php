@@ -12,14 +12,13 @@ use yii\web\AssetBundle;
 
 class Assets extends AssetBundle
 {
-
     public $css = [
         'notes.css',
     ];
 
 
     public $publishOptions = [
-      'forceCopy' => true
+        'forceCopy' => true,
     ];
 
     public function init()

@@ -4,7 +4,6 @@ namespace humhub\modules\notes\models;
 
 class NoteUserColors extends \humhub\components\ActiveRecord
 {
-
     /**
      * @return string the associated database table name
      */
@@ -18,9 +17,9 @@ class NoteUserColors extends \humhub\components\ActiveRecord
      */
     public function rules()
     {
-        return array(
-            array(['user_id', 'color'], 'required'),
-        );
+        return [
+            [['user_id', 'color'], 'required'],
+        ];
     }
 
 }

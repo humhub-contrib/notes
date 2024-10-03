@@ -15,7 +15,6 @@ use humhub\modules\space\models\Space;
  */
 class CreateNote extends \humhub\libs\BasePermission
 {
-
     /**
      * @inheritdoc
      */
@@ -30,7 +29,7 @@ class CreateNote extends \humhub\libs\BasePermission
      * @inheritdoc
      */
     protected $fixedGroups = [
-        Space::USERGROUP_USER
+        Space::USERGROUP_USER,
     ];
 
     /**
