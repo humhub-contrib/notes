@@ -7,7 +7,6 @@ use yii\base\Model;
 
 class ConfigureForm extends Model
 {
-
     public $baseUrl;
     public $apiKey;
     public $epAuthSessionPlugin;
@@ -31,11 +30,11 @@ class ConfigureForm extends Model
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'baseUrl' => Yii::t('NotesModule.base', 'URL to Etherpad'),
             'apiKey' => Yii::t('NotesModule.base', 'Etherpad API Key'),
             'epAuthSessionPlugin' => Yii::t('NotesModule.base', 'Use Etherpad Plugin: ep_auth_session'),
-        );
+        ];
     }
 
     public function attributeHints()

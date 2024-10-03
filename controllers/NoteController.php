@@ -21,9 +21,8 @@ use yii\web\HttpException;
  */
 class NoteController extends ContentContainerController
 {
-
     /**
-     * @var boolean hides containers sidebar in layout
+     * @var bool hides containers sidebar in layout
      * @since 0.11
      */
     public $hideSidebar = true;
@@ -34,14 +33,14 @@ class NoteController extends ContentContainerController
      */
     public function actions()
     {
-        return array(
-            'stream' => array(
+        return [
+            'stream' => [
                 'class' => StreamAction::className(),
                 'includes' => Note::className(),
                 'mode' => StreamAction::MODE_NORMAL,
-                'contentContainer' => $this->contentContainer
-            ),
-        );
+                'contentContainer' => $this->contentContainer,
+            ],
+        ];
     }
 
     /**
@@ -114,13 +113,13 @@ class NoteController extends ContentContainerController
             $padUrl = $url . "p/" . $note->getPadNameInternal() . "?sessionID=" . $sessionID . "&showChat=true&showLineNumbers=false&userColor=%23" . EtherpadHelper::getUserColor(Yii::$app->user->getIdentity());
         }
 
-        return $this->render('open', array(
+        return $this->render('open', [
             'contentContainer' => $this->contentContainer,
             'note' => $note,
             'padUrl' => $padUrl,
             'editors' => $note->getPadUser(),
-            'revisionCount' => $note->getRevisionCount()
-        ));
+            'revisionCount' => $note->getRevisionCount(),
+        ]);
     }
 
     /**
