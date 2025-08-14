@@ -1,7 +1,7 @@
 Changelog
 =========
 
-0.12.1 (Unreleased)
+0.13.0 (Unreleased)
 --------------------
 - Fix #38: Initialize module content class
 - Enh #40: Use PHP CS Fixer
