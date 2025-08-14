@@ -1,4 +1,5 @@
 <?php
+
 /**
  * RandomColor 1.0.3
  *
