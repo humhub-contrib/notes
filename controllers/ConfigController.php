@@ -27,7 +27,7 @@ class ConfigController extends Controller
             $this->module->settings->set('baseUrl', $form->baseUrl);
             $this->module->settings->set('apiKey', $form->apiKey);
             $this->module->settings->set('epAuthSessionPlugin', $form->epAuthSessionPlugin);
-
+            $this->view->saved();
             return $this->redirect(['/notes/config']);
         }
 

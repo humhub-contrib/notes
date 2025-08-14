@@ -1,7 +1,7 @@
 <?php
 
 use humhub\modules\notes\Assets;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
 use yii\helpers\Html;
 
 Assets::register($this);

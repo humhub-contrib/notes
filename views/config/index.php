@@ -2,8 +2,9 @@
 
 use humhub\models\Setting;
 use humhub\modules\notes\libs\EtherpadHelper;
-use humhub\modules\ui\form\widgets\ActiveForm;
-use humhub\widgets\Button;
+use humhub\widgets\form\ActiveForm ;
+use humhub\widgets\bootstrap\Button;
+use humhub\widgets\bootstrap\Alert;
 
 ?>
 <div class="panel panel-default">
@@ -36,13 +37,13 @@ use humhub\widgets\Button;
 
         <?= $form->field($model, 'baseUrl'); ?>
 
-        <div class="alert alert-info">
+        <?php Alert::beginInfo() ?>
             <strong><?= Yii::t('NotesModule.base', 'Etherpad URL Domain'); ?></strong>
             <p>
                 <?= Yii::t('NotesModule.base', 'If the Etherpad server is not running under the same domain as the HumHub installation, the Etherpad-Lite plugin "ep_auth_session" must be used.'); ?>
                 <a href="https://www.npmjs.com/package/ep_auth_session"><?= Yii::t('NotesModule.base', 'Plugin Homepage'); ?></a>
             </p>
-        </div>
+        <?php Alert::end() ?>
         <?= $form->field($model, 'epAuthSessionPlugin')->checkbox(); ?>
 
         <?= $form->field($model, 'apiKey'); ?>

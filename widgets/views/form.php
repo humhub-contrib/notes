@@ -2,7 +2,7 @@
 
 use humhub\modules\content\widgets\WallCreateContentFormFooter;
 use humhub\modules\notes\models\Note;
-use humhub\modules\ui\form\widgets\ActiveForm;
+use humhub\widgets\form\ActiveForm ;
 use yii\helpers\Html;
 
 /* @var $model Note */
