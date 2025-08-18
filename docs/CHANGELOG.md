@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.13.0 (Unreleased)
---------------------
+0.13.0 (August 18, 2025)
+------------------------
 - Fix #38: Initialize module content class
 - Enh #40: Use PHP CS Fixer
 - Enh #43: Migration to Bootstrap 5 for HumHub 1.18
