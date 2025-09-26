@@ -15,11 +15,11 @@ use humhub\modules\notes\models\ConfigureForm;
  */
 class ConfigController extends Controller
 {
-
     public function actionIndex()
     {
         $form = new ConfigureForm();
-        $form->baseUrl = rtrim($this->module->settings->get('baseUrl', ''), '/') . '/';;
+        $form->baseUrl = rtrim($this->module->settings->get('baseUrl', ''), '/') . '/';
+        ;
         $form->apiKey = $this->module->settings->get('apiKey');
         $form->epAuthSessionPlugin = $this->module->settings->get('epAuthSessionPlugin');
 
@@ -27,13 +27,11 @@ class ConfigController extends Controller
             $this->module->settings->set('baseUrl', $form->baseUrl);
             $this->module->settings->set('apiKey', $form->apiKey);
             $this->module->settings->set('epAuthSessionPlugin', $form->epAuthSessionPlugin);
-
+            $this->view->saved();
             return $this->redirect(['/notes/config']);
         }
 
-        return $this->render('index', array('model' => $form));
+        return $this->render('index', ['model' => $form]);
     }
 
 }
-
-?>

@@ -2,9 +2,9 @@
 
 class m140418_172839_note_usercolors extends yii\db\Migration
 {
-	public function up()
-	{
-        $this->createTable('note_usercolors', array(
+    public function up()
+    {
+        $this->createTable('note_usercolors', [
             'id' => 'pk',
             'user_id' => 'int NOT NULL',
             'color' => 'text',
@@ -12,22 +12,22 @@ class m140418_172839_note_usercolors extends yii\db\Migration
             'created_by' => 'int(11) NOT NULL',
             'updated_at' => 'datetime NOT NULL',
             'updated_by' => 'int(11) NOT NULL',
-        ));
-	}
+        ]);
+    }
 
-	public function down()
-	{
+    public function down()
+    {
         $this->dropTable('note_usercolors');
-	}
+    }
 
-	/*
-	// Use safeUp/safeDown to do migration with transaction
-	public function safeUp()
-	{
-	}
+    /*
+    // Use safeUp/safeDown to do migration with transaction
+    public function safeUp()
+    {
+    }
 
-	public function safeDown()
-	{
-	}
-	*/
+    public function safeDown()
+    {
+    }
+    */
 }

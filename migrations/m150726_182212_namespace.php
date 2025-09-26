@@ -6,18 +6,17 @@ use humhub\modules\notes\models\Note;
 
 class m150726_182212_namespace extends Migration
 {
-
     public function up()
     {
         $this->renameClass('Note', Note::className());
 
         $this->delete('notification', ['class' => 'NoteCreatedNotification']);
         $this->delete('notification', ['class' => 'NoteUpdatedNotification']);
-        
-        foreach (\humhub\modules\activity\models\Activity::findAll(['module'=>'notes']) as $activity) {
+
+        foreach (\humhub\modules\activity\models\Activity::findAll(['module' => 'notes']) as $activity) {
             $activity->delete();
         }
-        
+
     }
 
     public function down()

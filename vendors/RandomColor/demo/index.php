@@ -1,6 +1,7 @@
 <?php
 include '../src/RandomColor.php';
-use \Colors\RandomColor;
+use Colors\RandomColor;
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -59,8 +60,10 @@ use \Colors\RandomColor;
   <pre>RandomColor::many(36);</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(36) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+  foreach (RandomColor::many(36) as $c) {
+      echo '<span style="background:' . $c . ';"></span>';
+  }
+?>
   </div>
   
   <p>
@@ -68,7 +71,7 @@ use \Colors\RandomColor;
   </p>
   
   <h3>Format</h3>
-  <?php $c = RandomColor::one(array('format'=>'hsv','luminosity'=>'dark')); ?>
+  <?php $c = RandomColor::one(['format' => 'hsv','luminosity' => 'dark']); ?>
   <pre>
 RandomColor::one(array('format'=>'hex'));
   <?php echo '<span style="color:' . RandomColor::hsv2hex($c) . ';">// "' . RandomColor::hsv2hex($c) . '"</span>'; ?>
@@ -98,89 +101,113 @@ RandomColor::one(array('format'=>'rgbCss'));
   <pre>RandomColor::many(18, array('hue'=>'red'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(18, array('hue'=>'red')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(18, ['hue' => 'red']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <pre>RandomColor::many(18, array('hue'=>'orange'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(18, array('hue'=>'orange')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(18, ['hue' => 'orange']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <pre>RandomColor::many(18, array('hue'=>'yellow'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(18, array('hue'=>'yellow')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(18, ['hue' => 'yellow']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <pre>RandomColor::many(18, array('hue'=>'green'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(18, array('hue'=>'green')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(18, ['hue' => 'green']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <pre>RandomColor::many(18, array('hue'=>'blue'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(18, array('hue'=>'blue')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(18, ['hue' => 'blue']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <pre>RandomColor::many(18, array('hue'=>'purple'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(18, array('hue'=>'purple')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(18, ['hue' => 'purple']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <pre>RandomColor::many(18, array('hue'=>'pink'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(18, array('hue'=>'pink')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(18, ['hue' => 'pink']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <pre>RandomColor::many(18, array('hue'=>'monochrome'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(18, array('hue'=>'monochrome')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(18, ['hue' => 'monochrome']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <h3>Multiple colors</h3>
   <pre>RandomColor::many(27, array('hue'=>array('blue', 'yellow')));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(27, array('hue'=>array('blue', 'yellow'))) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(27, ['hue' => ['blue', 'yellow']]) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <h3>Light colors</h3>
   <pre>RandomColor::many(27, array('luminosity'=>'light'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(27, array('luminosity'=>'light')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(27, ['luminosity' => 'light']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <h3>Dark colors</h3>
   <pre>RandomColor::many(27, array('luminosity'=>'dark'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(27, array('luminosity'=>'dark')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(27, ['luminosity' => 'dark']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <h3>Truly random colors</h3>
   <pre>RandomColor::many(36, array('luminosity'=>'random', 'hue'=>'random'));</pre>
   <div class="output">
   <?php
-  foreach (RandomColor::many(36, array('luminosity'=>'random', 'hue'=>'random')) as $c) echo '<span style="background:' . $c . ';"></span>';
-  ?>
+foreach (RandomColor::many(36, ['luminosity' => 'random', 'hue' => 'random']) as $c) {
+    echo '<span style="background:' . $c . ';"></span>';
+}
+?>
   </div>
   
   <a class="btn btn-danger btn-lg btn-download" href="https://github.com/mistic100/RandomColor.php">

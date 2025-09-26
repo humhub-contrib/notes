@@ -5,7 +5,7 @@ namespace humhub\modules\notes\widgets;
 use humhub\modules\content\widgets\WallCreateContentForm;
 use humhub\modules\notes\models\Note;
 use humhub\modules\notes\permissions\CreateNote;
-use humhub\modules\ui\form\widgets\ActiveForm;
+use humhub\widgets\form\ActiveForm ;
 
 /**
  * This widget is used include the note form.
@@ -16,7 +16,6 @@ use humhub\modules\ui\form\widgets\ActiveForm;
  */
 class WallCreateForm extends WallCreateContentForm
 {
-
     public $submitUrl = '/notes/note/create';
 
     /**

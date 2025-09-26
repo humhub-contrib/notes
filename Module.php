@@ -17,19 +17,19 @@ class Module extends ContentContainerModule
         /** @var Space $space */
         $space = $event->sender->space;
         if ($space->moduleManager->isEnabled('notes')) {
-            $event->sender->addItem(array(
+            $event->sender->addItem([
                 'label' => Yii::t('NotesModule.base', 'Notes'),
                 'group' => 'modules',
                 'url' => $space->createUrl('/notes/note/show'),
                 'icon' => '<i class="fa fa-file-text"></i>',
                 'isActive' => (Yii::$app->controller->module && Yii::$app->controller->module->id == 'notes'),
-            ));
+            ]);
         }
     }
 
     public static function onUserDelete($event)
     {
-        NoteUserColors::deleteAll(array('user_id' => $event->sender->id));
+        NoteUserColors::deleteAll(['user_id' => $event->sender->id]);
         return true;
     }
 

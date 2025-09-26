@@ -9,16 +9,15 @@ use Yii;
  * This is the model class for table "note".
  *
  * The followings are the available columns in table 'note':
- * @property integer $id
+ * @property int $id
  * @property string $title
  * @property string $created_at
- * @property integer $created_by
+ * @property int $created_by
  * @property string $updated_at
- * @property integer $updated_by
+ * @property int $updated_by
  */
 class Note extends \humhub\modules\content\components\ContentActiveRecord implements \humhub\modules\search\interfaces\Searchable
 {
-
     public $autoAddToWall = true;
     public $userColor = "d4eed4";
 
@@ -40,10 +39,10 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
      */
     public function rules()
     {
-        return array(
-            array(['title'], 'required'),
-            array('title', 'string', 'max' => 255),
-        );
+        return [
+            [['title'], 'required'],
+            ['title', 'string', 'max' => 255],
+        ];
     }
 
     /**
@@ -51,7 +50,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
      */
     public function attributeLabels()
     {
-        return array(
+        return [
             'id' => 'ID',
             'title' => 'Title',
             'visibility' => 'Visibility',
@@ -59,9 +58,9 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
             'created_by' => 'Created By',
             'updated_at' => 'Updated At',
             'updated_by' => 'Updated By',
-        );
+        ];
     }
-    
+
 
 
     /**
@@ -179,10 +178,10 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
      */
     public function getSearchAttributes()
     {
-        return array(
+        return [
             'title' => $this->title,
             'content' => $this->getPadContent(),
-        );
+        ];
     }
 
     /**

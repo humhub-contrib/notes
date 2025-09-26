@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @link https://www.humhub.org/
  * @copyright Copyright (c) 2018 HumHub GmbH & Co. KG
@@ -15,14 +16,12 @@ use humhub\modules\notes\Module;
 use humhub\modules\user\models\User;
 use Yii;
 
-
 /**
  * Class EtherpadHelper
  * @package humhub\modules\notes\libs
  */
 class EtherpadHelper
 {
-
     private static $_etherClient;
 
     /**
@@ -156,8 +155,9 @@ class EtherpadHelper
      *
      * @return string
      */
-    private static function getRandomHexColor() {
-        require_once Yii::$app->getModule('notes')->basePath.'/vendors/RandomColor/src/RandomColor.php';
+    private static function getRandomHexColor()
+    {
+        require_once Yii::$app->getModule('notes')->basePath . '/vendors/RandomColor/src/RandomColor.php';
         return substr(\Colors\RandomColor::one(['luminosity' => 'light']), 1);
     }
 
