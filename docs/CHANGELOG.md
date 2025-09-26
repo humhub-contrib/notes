@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.13.1 (Unreleased)
+--------------------
+- Fix #39: Update module resources path
+
 0.13.0 (August 18, 2025)
 ------------------------
 - Fix #38: Initialize module content class
