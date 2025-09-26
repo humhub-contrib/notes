@@ -1,7 +1,7 @@
 <?php
 
 use humhub\modules\notes\Assets;
-use humhub\widgets\Button;
+use humhub\widgets\bootstrap\Button;
 use yii\helpers\Html;
 
 Assets::register($this);
@@ -19,11 +19,11 @@ $saveLinkUrl = $note->content->container->createUrl('/notes/note/edit', ['id' =>
             <?php foreach ($editors as $editor) : ?>
                 <div class="note-editor">
                     <a href="<?php echo $editor['url']; ?>">
-                        <img src="<?= $editor['image']; ?>" class="img-rounded tt img_margin"
+                        <img src="<?= $editor['image']; ?>" class="rounded tt img_margin"
                              height="40" width="40" alt="40x40" data-src="holder.js/40x40"
                              style="width: 40px; height: 40px; <?php if ($editor['online'] == "false" && $editor['id'] != Yii::$app->user->id) { ?>opacity: 0.5;<?php } ?>"
-                             data-toggle="tooltip" data-placement="top" title=""
-                             data-original-title="<?= Html::encode($editor['displayName']); ?>
+                             data-bs-toggle="tooltip" data-placement="top" title=""
+                             data-bs-title="<?= Html::encode($editor['displayName']); ?>
                              <?php if ($editor['online'] == "true" || $editor['id'] == Yii::$app->user->id) { ?>(Online)<?php } ?>">
                     </a>
                     <div class="note-editor-color"
