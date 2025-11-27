@@ -1,11 +1,12 @@
 <?php
 
-use humhub\models\Setting;
 use humhub\modules\notes\libs\EtherpadHelper;
+use humhub\modules\notes\models\ConfigureForm;
 use humhub\widgets\form\ActiveForm ;
 use humhub\widgets\bootstrap\Button;
 use humhub\widgets\bootstrap\Alert;
 
+/* @var ConfigureForm $model */
 ?>
 <div class="panel panel-default">
     <div class="panel-heading"><?= Yii::t('NotesModule.base', 'Notes Module Configuration'); ?></div>
@@ -18,7 +19,7 @@ use humhub\widgets\bootstrap\Alert;
         </p>
 
         <br/>
-        <?php if (Setting::Get('baseUrl', 'notes') != "" && Setting::Get('apiKey', 'notes') != ""): ?>
+        <?php if ($model->baseUrl && $model->apiKey) : ?>
             <p><?= Yii::t('NotesModule.base', 'Current Status:'); ?>
 
                 <?php if (EtherpadHelper::testAPIConnection()) : ?>
