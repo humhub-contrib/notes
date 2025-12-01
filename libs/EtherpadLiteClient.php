@@ -2,7 +2,6 @@
 
 namespace humhub\modules\notes\libs;
 
-use humhub\components\SettingsManager;
 use InvalidArgumentException;
 use UnexpectedValueException;
 use Yii;
@@ -406,21 +405,18 @@ class EtherpadLiteClient
      */
     protected function handleCurlProxyOptions(&$curl)
     {
-        /* @var SettingsManager $proxySettings */
-        $proxySettings = Yii::$app->getModule('proxy')?->settings;
-
-        if ($proxySettings?->get('enabled')) {
-            curl_setopt($curl, CURLOPT_PROXY, $proxySettings->get('server'));
-            curl_setopt($curl, CURLOPT_PROXYPORT, $proxySettings->get('port'));
+        if (Yii::$app->settings->get('proxy.enabled')) {
+            curl_setopt($curl, CURLOPT_PROXY, Yii::$app->settings->get('proxy.server'));
+            curl_setopt($curl, CURLOPT_PROXYPORT, Yii::$app->settings->get('proxy.port'));
 
             if (defined('CURLOPT_PROXYUSERNAME')) {
-                curl_setopt($curl, CURLOPT_PROXYUSERNAME, $proxySettings->get('user'));
+                curl_setopt($curl, CURLOPT_PROXYUSERNAME, Yii::$app->settings->get('proxy.user'));
             }
             if (defined('CURLOPT_PROXYPASSWORD')) {
-                curl_setopt($curl, CURLOPT_PROXYPASSWORD, $proxySettings->get('pass'));
+                curl_setopt($curl, CURLOPT_PROXYPASSWORD, Yii::$app->settings->get('proxy.password'));
             }
             if (defined('CURLOPT_NOPROXY')) {
-                curl_setopt($curl, CURLOPT_NOPROXY, $proxySettings->get('noproxy'));
+                curl_setopt($curl, CURLOPT_NOPROXY, Yii::$app->settings->get('proxy.noproxy'));
             }
         }
     }
