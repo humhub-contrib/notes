@@ -1,8 +1,8 @@
 Changelog
 =========
 
-0.13.1 (Unreleased)
---------------------
+0.13.1 (December 1, 2025)
+-------------------------
 - Fix #39: Update module resources path
 - Fix #44: Fix deprecated module settings method
 
