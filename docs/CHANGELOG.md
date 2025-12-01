@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.13.2 (December 1, 2025)
+-------------------------
+- Fix: Wrong Asset bundle path
+
 0.13.1 (December 1, 2025)
 -------------------------
 - Fix #39: Update module resources path
