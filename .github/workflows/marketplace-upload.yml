@@ -7,5 +7,7 @@ name: Upload to HumHub Marketplace
 
 jobs:
   build:
-    uses: humhub-contrib/actions/.github/workflows/module-marketplace-upload.yml@main
-    secrets: inherit
+    uses: humhub/module-coding-standards/.github/workflows/marketplace-upload.yml@main
+    secrets:
+      MARKETPLACE_API_KEY: ${{ secrets.MARKETPLACE_API_KEY }}
+      MARKETPLACE_API_KEY_INT: ${{ secrets.MARKETPLACE_API_KEY_INT }}
