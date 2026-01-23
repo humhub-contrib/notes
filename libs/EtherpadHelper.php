@@ -76,7 +76,7 @@ class EtherpadHelper
     {
         try {
             return self::getPadClient()->createGroupIfNotExistsFor($container->guid)->groupID;
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             return null;
         }
     }
@@ -112,11 +112,7 @@ class EtherpadHelper
             $client = self::getPadClient();
             $client->listAllGroups();
             return true;
-        } catch (\UnexpectedValueException $ex) {
-            return false;
-        } catch (\InvalidArgumentException $ex) {
-            return false;
-        } catch (\Exception $ex) {
+        } catch (\UnexpectedValueException|\InvalidArgumentException|\Exception) {
             return false;
         }
     }
@@ -158,7 +154,7 @@ class EtherpadHelper
     private static function getRandomHexColor()
     {
         require_once Yii::$app->getModule('notes')->basePath . '/vendors/RandomColor/src/RandomColor.php';
-        return substr(\Colors\RandomColor::one(['luminosity' => 'light']), 1);
+        return substr((string) \Colors\RandomColor::one(['luminosity' => 'light']), 1);
     }
 
     /**
