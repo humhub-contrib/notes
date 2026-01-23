@@ -90,7 +90,7 @@ class NoteController extends ContentContainerController
         $sessionID = $sessionID->sessionID;
 
         $domain = substr(yii\helpers\Url::base(''), 2);
-        if (strpos($domain, '/') !== false) {
+        if (str_contains($domain, '/')) {
             $domain = substr($domain, 0, strpos($domain, '/'));
         }
 
@@ -100,7 +100,7 @@ class NoteController extends ContentContainerController
             $domain = $domainParts[1] . '.' . $domainParts[0];
         }
 
-        setcookie("sessionID", $sessionID, $validUntil, '/', $domain);
+        setcookie("sessionID", (string) $sessionID, ['expires' => $validUntil, 'path' => '/', 'domain' => $domain]);
 
         $note->tryCreatePad();
 

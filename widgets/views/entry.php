@@ -11,7 +11,7 @@ $openUrl = $note->content->container->createUrl('/notes/note/open', ['id' => $no
 <div class="notes-sticker">
     <div class="notes-title"><?= Html::encode($note->title); ?></div>
 
-    <?php foreach (array_slice(explode("\n", $note->getPadContent()), 0, 4) as $line): ?>
+    <?php foreach (array_slice(explode("\n", (string) $note->getPadContent()), 0, 4) as $line): ?>
         <?php if (empty(trim($line))) { continue; } ?>
         <div class="notes-line"><?= Html::encode($line); ?></div>
     <?php endforeach; ?>

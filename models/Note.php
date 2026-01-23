@@ -152,7 +152,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
     {
         try {
             EtherpadHelper::getPadClient()->createGroupPad(EtherpadHelper::getPadGroupId($this->content->container), $this->getPadId(), "This is a new pad!");
-        } catch (\Exception $e) {
+        } catch (\Exception) {
             # already exists
         }
     }
@@ -194,7 +194,7 @@ class Note extends \humhub\modules\content\components\ContentActiveRecord implem
         try {
             $content = EtherpadHelper::getPadClient()->getText($this->getPadNameInternal());
             return $content->text;
-        } catch (\Exception $ex) {
+        } catch (\Exception) {
             return '';
             //return Yii::t('NotesModule.base', "Could not get note content!");
         }
