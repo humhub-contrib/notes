@@ -4,6 +4,7 @@ Changelog
 0.13.2 (December 1, 2025)
 -------------------------
 - Fix: Wrong Asset bundle path
+- Enh: Automated code refactoring for HumHub 1.18 using Rector
 
 0.13.1 (December 1, 2025)
 -------------------------

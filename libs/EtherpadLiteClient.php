@@ -20,7 +20,7 @@ class EtherpadLiteClient
 
     public function __construct($apiKey, $baseUrl = null)
     {
-        if (strlen($apiKey) < 1) {
+        if (strlen((string) $apiKey) < 1) {
             throw new InvalidArgumentException("[{$apiKey}] is not a valid API key");
         }
         $this->apiKey = $apiKey;
@@ -295,7 +295,7 @@ class EtherpadLiteClient
         return $this->post("createPad", [
             "padID" => $padID,
             "text" => $text,
-        ], 'POST');
+        ]);
     }
 
     // returns the number of revisions of this pad
