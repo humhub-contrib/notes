@@ -18,7 +18,7 @@ class ConfigController extends Controller
     public function actionIndex()
     {
         $form = new ConfigureForm();
-        $form->baseUrl = rtrim($this->module->settings->get('baseUrl', ''), '/') . '/';
+        $form->baseUrl = rtrim((string) $this->module->settings->get('baseUrl', ''), '/') . '/';
         ;
         $form->apiKey = $this->module->settings->get('apiKey');
         $form->epAuthSessionPlugin = $this->module->settings->get('epAuthSessionPlugin');
