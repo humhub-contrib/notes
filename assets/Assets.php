@@ -8,7 +8,7 @@
 
 namespace humhub\modules\notes\assets;
 
-use yii\web\AssetBundle;
+use humhub\components\assets\AssetBundle;
 
 class Assets extends AssetBundle
 {
