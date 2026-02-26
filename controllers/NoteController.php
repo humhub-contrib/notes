@@ -2,13 +2,12 @@
 
 namespace humhub\modules\notes\controllers;
 
-use humhub\models\Setting;
 use humhub\modules\content\components\ContentContainerController;
+use humhub\modules\notes\actions\StreamAction;
 use humhub\modules\notes\libs\EtherpadHelper;
 use humhub\modules\notes\models\Note;
 use humhub\modules\notes\Module;
 use humhub\modules\notes\permissions\CreateNote;
-use humhub\modules\notes\StreamAction;
 use humhub\modules\notes\widgets\WallCreateForm;
 use Yii;
 use yii\web\HttpException;
@@ -35,9 +34,8 @@ class NoteController extends ContentContainerController
     {
         return [
             'stream' => [
-                'class' => StreamAction::className(),
-                'includes' => Note::className(),
-                'mode' => StreamAction::MODE_NORMAL,
+                'class' => StreamAction::class,
+                'includes' => Note::class,
                 'contentContainer' => $this->contentContainer,
             ],
         ];
@@ -87,7 +85,7 @@ class NoteController extends ContentContainerController
         // SET ETHERPAD COOKIE
         $validUntil = mktime(0, 0, 0, date("m"), date("d") + 1, date("y")); // One day in the future
         $sessionID = EtherpadHelper::getPadClient()->createSession(EtherpadHelper::getPadGroupId($this->contentContainer), EtherpadHelper::getPadAuthorId(), $validUntil);
-        $sessionID = $sessionID->sessionID;
+        $sessionID = $sessionID?->sessionID;
 
         $domain = substr(yii\helpers\Url::base(''), 2);
         if (str_contains($domain, '/')) {

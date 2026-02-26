@@ -4,6 +4,7 @@ Changelog
 0.13.3 (Unreleased)
 -------------------------
 - Fix #49: Fix asset bundle
+- Fix #50: Remove deprecations
 
 0.13.2 (December 1, 2025)
 -------------------------

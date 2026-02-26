@@ -2,6 +2,7 @@
 
 namespace humhub\modules\notes\models;
 
+use humhub\modules\content\components\ContentActiveRecord;
 use humhub\modules\notes\libs\EtherpadHelper;
 use Yii;
 
@@ -16,9 +17,8 @@ use Yii;
  * @property string $updated_at
  * @property int $updated_by
  */
-class Note extends \humhub\modules\content\components\ContentActiveRecord implements \humhub\modules\search\interfaces\Searchable
+class Note extends ContentActiveRecord
 {
-    public $autoAddToWall = true;
     public $userColor = "d4eed4";
 
     /**
