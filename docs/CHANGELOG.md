@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.14.0 (Unreleased)
+-------------------------
+- Fix #53: Update user image
+
 0.13.3 (Unreleased)
 -------------------------
 - Fix: Make m150726_182212_namespace migration resilient to evolved schema (activity.module column no longer exists)
