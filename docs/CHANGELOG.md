@@ -5,8 +5,8 @@ Changelog
 -------------------------
 - Fix #53: Update user image
 
-0.13.3 (Unreleased)
--------------------------
+0.13.3 (July 8, 2026)
+---------------------
 - Fix: Make m150726_182212_namespace migration resilient to evolved schema (activity.module column no longer exists)
 - Fix #49: Fix asset bundle
 - Fix #50: Remove deprecations
