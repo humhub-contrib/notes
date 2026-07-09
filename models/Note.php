@@ -84,7 +84,7 @@ class Note extends ContentActiveRecord
                 $this->userColor = EtherpadHelper::getUserColor($user);
 
                 // extend array with user details from profile and user model
-                $editors[] = ['id' => $user->id, 'displayName' => $user->displayName, 'title' => $user->profile->title, 'image' => $user->getProfileImage()->getUrl(), 'url' => $user->getUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorId)];
+                $editors[] = ['id' => $user->id, 'displayName' => $user->displayName, 'title' => $user->profile->title, 'image' => $user->image->getUrl(), 'url' => $user->getUrl(), 'color' => $this->userColor, 'online' => $this->getOnlineStatus($authorId)];
             }
         }
         return $editors;
