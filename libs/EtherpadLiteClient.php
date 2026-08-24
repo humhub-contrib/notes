@@ -64,7 +64,6 @@ class EtherpadLiteClient
             }
             $this->handleCurlProxyOptions($c);
             $result = curl_exec($c);
-            curl_close($c);
             // fallback to plain php
         } else {
             $params = ['http' => ['method' => $method, 'ignore_errors' => true, 'header' => 'Content-Type:application/x-www-form-urlencoded']];
