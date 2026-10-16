@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.14.1 (Unreleased)
+-------------------
+- Fix #54: Errors on opening a note (Url import, 500 instead of 404/503, color deprecation, CSP); Pads not deleted with notes; Cookie flags; Etherpad URL validation
+
 0.14.0 (July 31, 2026)
 ----------------------
 - Fix #53: Update user image

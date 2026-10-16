@@ -18,6 +18,8 @@ class ConfigureForm extends Model
     {
         return [
             [['apiKey', 'baseUrl'], 'required'],
+            ['baseUrl', 'trim'],
+            ['baseUrl', 'url', 'validSchemes' => ['http', 'https'], 'defaultScheme' => null],
             [['epAuthSessionPlugin'], 'boolean'],
             ['apiKey', 'string', 'max' => 250],
         ];

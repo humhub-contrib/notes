@@ -60,10 +60,34 @@ class EtherpadHelper
         $module = Yii::$app->getModule('notes');
 
         if (!self::$_etherClient) {
-            self::$_etherClient = new EtherpadLiteClient($module->settings->get('apiKey'), $module->settings->get('baseUrl') . "api");
+            self::$_etherClient = new EtherpadLiteClient($module->settings->get('apiKey'), self::getBaseUrl() . 'api');
         }
 
         return self::$_etherClient;
+    }
+
+    /**
+     * Returns the configured Etherpad URL, always with a trailing slash
+     *
+     * @return string
+     */
+    public static function getBaseUrl(): string
+    {
+        $baseUrl = trim((string) Yii::$app->getModule('notes')->settings->get('baseUrl', ''));
+
+        return $baseUrl === '' ? '' : rtrim($baseUrl, '/') . '/';
+    }
+
+    /**
+     * Checks if the URL and the API key of Etherpad are configured
+     *
+     * @return bool
+     */
+    public static function isConfigured(): bool
+    {
+        $settings = Yii::$app->getModule('notes')->settings;
+
+        return self::getBaseUrl() !== '' && trim((string) $settings->get('apiKey', '')) !== '';
     }
 
     /**
@@ -97,8 +121,9 @@ class EtherpadHelper
 
             return $author->authorID;
         } catch (\Exception $e) {
-            echo "\n\ncreateAuthorIfNotExistsFor Failed with message: " . $e->getMessage();
+            Yii::error('createAuthorIfNotExistsFor failed: ' . $e->getMessage(), 'notes');
 
+            return null;
         }
     }
 
@@ -154,7 +179,7 @@ class EtherpadHelper
     private static function getRandomHexColor()
     {
         require_once Yii::$app->getModule('notes')->basePath . '/vendors/RandomColor/src/RandomColor.php';
-        return substr((string) \Colors\RandomColor::one(['luminosity' => 'light']), 1);
+        return substr((string) RandomColor::one(['luminosity' => 'light']), 1);
     }
 
     /**

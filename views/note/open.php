@@ -1,8 +1,8 @@
 <?php
 
+use humhub\helpers\Html;
 use humhub\modules\notes\assets\Assets;
 use humhub\widgets\bootstrap\Button;
-use yii\helpers\Html;
 
 Assets::register($this);
 
@@ -11,15 +11,15 @@ $saveLinkUrl = $note->content->container->createUrl('/notes/note/edit', ['id' =>
 <div class="panel panel-default" id="note_content">
 
     <div class="panel-heading"><?php echo Html::encode($note->title); ?></div>
-    <iframe id="note" src="<?= $padUrl; ?>" height="400" width="100%"></iframe>
+    <iframe id="note" src="<?= Html::encode($padUrl) ?>" height="400" width="100%"></iframe>
 
     <?php if (count($editors) > 0) { ?>
         <div class="panel-body">
             <div style="font-size: 12px; margin-bottom: 5px;"><?= Yii::t('NotesModule.base', 'Editors:'); ?></div>
             <?php foreach ($editors as $editor) : ?>
                 <div class="note-editor">
-                    <a href="<?php echo $editor['url']; ?>">
-                        <img src="<?= $editor['image']; ?>" class="rounded tt img_margin"
+                    <a href="<?= Html::encode($editor['url']) ?>">
+                        <img src="<?= Html::encode($editor['image']) ?>" class="rounded tt img_margin"
                              height="40" width="40" alt="40x40" data-src="holder.js/40x40"
                              style="width: 40px; height: 40px; <?php if ($editor['online'] == "false" && $editor['id'] != Yii::$app->user->id) { ?>opacity: 0.5;<?php } ?>"
                              data-bs-toggle="tooltip" data-placement="top" title=""
@@ -40,17 +40,12 @@ $saveLinkUrl = $note->content->container->createUrl('/notes/note/edit', ['id' =>
 
 </div>
 
-<script type="text/javascript">
-    // adapt iframe size
-    setSize();
-
-    window.onresize = function () {
-        // adapt iframe size
-        setSize();
-    };
-
-    function setSize() {
-        // bring iframe height to window height
+<script <?= Html::nonce() ?>>
+    // adapt iframe size to window height
+    function setNoteIframeSize() {
         $('#note').css('height', window.innerHeight - 380 + 'px');
     }
+
+    setNoteIframeSize();
+    $(window).off('resize.notes').on('resize.notes', setNoteIframeSize);
 </script>

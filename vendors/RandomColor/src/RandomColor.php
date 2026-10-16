@@ -228,9 +228,9 @@ class RandomColor
     private static function _rand($bounds, $options)
     {
         if (isset($options['prng'])) {
-            return $options['prng']($bounds[0], $bounds[1]);
+            return $options['prng']((int) $bounds[0], (int) $bounds[1]);
         } else {
-            return mt_rand($bounds[0], $bounds[1]);
+            return mt_rand((int) $bounds[0], (int) $bounds[1]);
         }
     }
 
