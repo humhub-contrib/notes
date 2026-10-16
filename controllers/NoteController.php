@@ -10,6 +10,7 @@ use humhub\modules\notes\Module;
 use humhub\modules\notes\permissions\CreateNote;
 use humhub\modules\notes\widgets\WallCreateForm;
 use Yii;
+use yii\helpers\Url;
 use yii\web\HttpException;
 
 /**
@@ -57,7 +58,7 @@ class NoteController extends ContentContainerController
     public function actionCreate()
     {
         if (!$this->contentContainer->permissionManager->can(new CreateNote())) {
-            throw new HttpException(400, 'Access denied!');
+            throw new HttpException(403, 'Access denied!');
         }
 
         $note = new Note();
@@ -78,37 +79,64 @@ class NoteController extends ContentContainerController
         /** @var Note $note */
         $note = Note::find()->contentContainer($this->contentContainer)->readable()->where(['note.id' => $id])->one();
 
+        if ($note === null) {
+            throw new HttpException(404, Yii::t('NotesModule.base', 'Note not found!'));
+        }
+
         if (!$note->content->canView()) {
-            throw new HttpException(401, 'Access denied!');
+            throw new HttpException(403, 'Access denied!');
+        }
+
+        if (!EtherpadHelper::isConfigured()) {
+            throw new HttpException(503, Yii::t('NotesModule.base', 'Etherpad is not configured. Please contact your administrator.'));
         }
 
         // SET ETHERPAD COOKIE
-        $validUntil = mktime(0, 0, 0, date("m"), date("d") + 1, date("y")); // One day in the future
-        $sessionID = EtherpadHelper::getPadClient()->createSession(EtherpadHelper::getPadGroupId($this->contentContainer), EtherpadHelper::getPadAuthorId(), $validUntil);
-        $sessionID = $sessionID?->sessionID;
+        try {
+            $validUntil = mktime(0, 0, 0, date("m"), date("d") + 1, date("y")); // One day in the future
+            $groupId = EtherpadHelper::getPadGroupId($this->contentContainer);
+            $authorId = EtherpadHelper::getPadAuthorId();
+            if ($groupId === null || $authorId === null) {
+                throw new \Exception('Could not resolve Etherpad group or author');
+            }
 
-        $domain = substr(yii\helpers\Url::base(''), 2);
-        if (str_contains($domain, '/')) {
-            $domain = substr($domain, 0, strpos($domain, '/'));
+            $sessionID = EtherpadHelper::getPadClient()->createSession($groupId, $authorId, $validUntil)?->sessionID;
+            if (empty($sessionID)) {
+                throw new \Exception('Etherpad returned no session');
+            }
+
+            $note->tryCreatePad();
+        } catch (\Exception $e) {
+            Yii::error('Could not open Etherpad session: ' . $e->getMessage(), 'notes');
+            throw new HttpException(503, Yii::t('NotesModule.base', 'Etherpad is currently not available. Please try again later.'));
         }
 
-        // reduce domain from humhub.xyz.com to xyz.com
-        $domainParts = array_reverse(explode('.', $domain));
-        if (count($domainParts) > 2) {
-            $domain = $domainParts[1] . '.' . $domainParts[0];
+        $domain = (string) parse_url(Url::base(true), PHP_URL_HOST);
+
+        // reduce domain from humhub.xyz.com to xyz.com (not for IP addresses)
+        if (!filter_var($domain, FILTER_VALIDATE_IP)) {
+            $domainParts = array_reverse(explode('.', $domain));
+            if (count($domainParts) > 2) {
+                $domain = $domainParts[1] . '.' . $domainParts[0];
+            }
         }
 
-        setcookie("sessionID", (string) $sessionID, ['expires' => $validUntil, 'path' => '/', 'domain' => $domain]);
+        setcookie("sessionID", (string) $sessionID, [
+            'expires' => $validUntil,
+            'path' => '/',
+            'domain' => $domain,
+            'secure' => Yii::$app->request->isSecureConnection,
+            'httponly' => true,
+            'samesite' => 'Lax',
+        ]);
 
-        $note->tryCreatePad();
-
-        $url = $this->module->settings->get('baseUrl');
+        $url = EtherpadHelper::getBaseUrl();
 
         if (!empty($this->module->settings->get('epAuthSessionPlugin'))) {
             // Use ep_auth_session plugin
-            $padUrl = $url . "auth_session?sessionID=" . $sessionID . "&padName=" . $note->getPadNameInternal();
+            $padUrl = $url . "auth_session?sessionID=" . rawurlencode($sessionID) . "&padName=" . rawurlencode($note->getPadNameInternal());
         } else {
-            $padUrl = $url . "p/" . $note->getPadNameInternal() . "?sessionID=" . $sessionID . "&showChat=true&showLineNumbers=false&userColor=%23" . EtherpadHelper::getUserColor(Yii::$app->user->getIdentity());
+            $padUrl = $url . "p/" . $note->getPadNameInternal() . "?sessionID=" . rawurlencode($sessionID) . "&showChat=true&showLineNumbers=false&userColor=%23" . EtherpadHelper::getUserColor(Yii::$app->user->getIdentity());
         }
 
         return $this->render('open', [

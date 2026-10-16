@@ -74,10 +74,11 @@ class Note extends ContentActiveRecord
             $authors = EtherpadHelper::getPadClient()->listAuthorsOfPad($this->getPadNameInternal());
         } catch (\Exception $ex) {
             Yii::error("Could not get note users! " . $ex->getMessage());
+            return [];
         }
 
         $editors = [];
-        foreach ($authors->authorIDs as $authorId) {
+        foreach ($authors->authorIDs ?? [] as $authorId) {
             $user = EtherpadHelper::getUserByEtherpadAuthorId($authorId);
             if ($user !== null) {
                 // get (set if not exist) the user color
@@ -120,11 +121,16 @@ class Note extends ContentActiveRecord
 
         $status = "false";
 
-        // get all authors, which are currently online
-        $authorsOnline = EtherpadHelper::getPadClient()->padUsers($this->getPadNameInternal());
+        try {
+            // get all authors, which are currently online
+            $authorsOnline = EtherpadHelper::getPadClient()->padUsers($this->getPadNameInternal());
+        } catch (\Exception $ex) {
+            Yii::error('Could not get online users of note ' . $this->id . ': ' . $ex->getMessage(), 'notes');
+            return $status;
+        }
 
         // check if the passed author id match with an online user
-        foreach ($authorsOnline->padUsers as $authorOnline) {
+        foreach ($authorsOnline->padUsers ?? [] as $authorOnline) {
             if ($authorOnline->id == $authorID) {
                 $status = "true";
             }
@@ -141,8 +147,13 @@ class Note extends ContentActiveRecord
      */
     public function getRevisionCount()
     {
-        $revision_count = EtherpadHelper::getPadClient()->getRevisionsCount($this->getPadNameInternal());
-        return $revision_count->revisions;
+        try {
+            $revision_count = EtherpadHelper::getPadClient()->getRevisionsCount($this->getPadNameInternal());
+            return (int) $revision_count->revisions;
+        } catch (\Exception $ex) {
+            Yii::error('Could not get revision count of note ' . $this->id . ': ' . $ex->getMessage(), 'notes');
+            return 0;
+        }
     }
 
     /**
@@ -155,6 +166,33 @@ class Note extends ContentActiveRecord
         } catch (\Exception) {
             # already exists
         }
+    }
+
+    /**
+     * Deletes the Etherpad pad of this note (used when the note is deleted permanently)
+     */
+    public function deletePad()
+    {
+        if (!EtherpadHelper::isConfigured()) {
+            return;
+        }
+
+        try {
+            EtherpadHelper::getPadClient()->deletePad($this->getPadNameInternal());
+        } catch (\Exception $ex) {
+            Yii::error('Could not delete pad of note ' . $this->id . ': ' . $ex->getMessage(), 'notes');
+        }
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function afterDelete()
+    {
+        // Must run before the parent call, which removes the content record needed to resolve the pad name
+        $this->deletePad();
+
+        parent::afterDelete();
     }
 
     /**
