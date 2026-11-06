@@ -4,8 +4,8 @@
 
 .notes-sticker {
     position: relative;
-    border: 1px solid #cecece;
-    background-color: #ffffff;
+    border: 1px solid var(--bs-border-color);
+    background-color: var(--bs-body-bg);
     padding: 31px 10px 30px 45px;
     margin: 20px 10px 0 0;
     line-height: 2.3em;
@@ -30,7 +30,7 @@
 .notes-sticker .notes-title {
     font-weight: 300;
     font-size: 16px;
-    color: #bebebe;
+    color: var(--bs-tertiary-color);
 }
 
 .notes-sticker .notes-line {
@@ -56,5 +56,5 @@
     width: 11px;
     height: 11px;
     border-radius: 10px;
-    border: 2px solid #fff;
+    border: 2px solid var(--bs-body-bg);
 }

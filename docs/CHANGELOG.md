@@ -1,6 +1,10 @@
 Changelog
 =========
 
+0.15.0 (Unreleased)
+-------------------
+- Enh: Dark mode: hard-coded greys and light backgrounds became colour tokens of the core (humhub/humhub#8710)
+
 0.14.1 (Unreleased)
 -------------------
 - Fix #54: Errors on opening a note (Url import, 500 instead of 404/503, color deprecation, CSP); Pads not deleted with notes; Cookie flags; Etherpad URL validation
