@@ -5,7 +5,8 @@
     "keywords": ["etherpad", "notes"],
     "version": "0.14.1",
     "humhub": {
-        "minVersion": "1.19"
+        "minVersion": "1.19",
+        "maxVersion": "1.19"
     },
     "homepage": "https://github.com/humhub-contrib/notes",
     "screenshots": ["resources/screen1.jpg", "resources/screen2.jpg"]
