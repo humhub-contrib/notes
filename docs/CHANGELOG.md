@@ -3,6 +3,7 @@ Changelog
 
 0.15.0 (Unreleased)
 -------------------
+- Fix: The title of a note takes the muted text colour instead of the disabled grey (humhub/humhub#8752)
 - Enh: Dark mode: hard-coded greys and light backgrounds became colour tokens of the core (humhub/humhub#8710)
 
 0.14.1 (Unreleased)

@@ -30,7 +30,7 @@
 .notes-sticker .notes-title {
     font-weight: 300;
     font-size: 16px;
-    color: var(--bs-tertiary-color);
+    color: var(--bs-secondary-color);
 }
 
 .notes-sticker .notes-line {
