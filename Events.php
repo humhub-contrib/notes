@@ -11,8 +11,8 @@ namespace humhub\modules\notes;
 use humhub\helpers\ControllerHelper;
 use humhub\modules\notes\models\NoteUserColors;
 use humhub\modules\space\widgets\Menu as SpaceMenu;
-use humhub\modules\ui\menu\MenuLink;
 use humhub\modules\user\models\User;
+use humhub\widgets\menu\MenuLink;
 use Yii;
 
 class Events

@@ -3,7 +3,7 @@
 use humhub\modules\content\components\ContentContainerActiveRecord;
 use humhub\modules\notes\permissions\CreateNote;
 use humhub\modules\notes\widgets\WallCreateForm;
-use humhub\modules\stream\widgets\StreamViewer;
+use humhub\modules\content\widgets\stream\StreamViewer;
 
 /* @var ContentContainerActiveRecord $contentContainer */
 ?>

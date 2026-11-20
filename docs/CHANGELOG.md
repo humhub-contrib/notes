@@ -5,6 +5,7 @@ Changelog
 -------------------
 - Fix: The title of a note takes the muted text colour instead of the disabled grey (humhub/humhub#8752)
 - Enh: Dark mode: hard-coded greys and light backgrounds became colour tokens of the core (humhub/humhub#8710)
+- Enh: `humhub\widgets\menu\MenuLink` and `content` stream classes instead of the deprecated `ui` and `stream` ones
 
 0.14.1 (Unreleased)
 -------------------
